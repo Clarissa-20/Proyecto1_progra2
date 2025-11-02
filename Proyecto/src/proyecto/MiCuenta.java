@@ -57,7 +57,7 @@ public class MiCuenta extends JFrame{
         
         //seccion 3: eliminar cuenta
         JPanel eliminarPanel = new JPanel(new GridLayout(2, 2, 5, 5));
-        eliminarPanel.setBorder(BorderFactory.createTitledBorder("Peligro - Eliminar Cuenta"));
+        eliminarPanel.setBorder(BorderFactory.createTitledBorder("Eliminar Cuenta"));
         
         txtConfirmarPassword = new JPasswordField(5);
         JButton btnEliminar = new JButton("ELIMINAR CUENTA");
@@ -96,7 +96,7 @@ public class MiCuenta extends JFrame{
         if(confirmar == JOptionPane.YES_OPTION){
             boolean exito = sistema.eliminarCuenta(jugadorActual.getUsername(), confirmarPassword);
             if(exito){
-                JOptionPane.showMessageDialog(this, "Cuenta eliminada con exito. Volviendo al Menu de Inicio", "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cuenta eliminada con exito.", "Eliminacion", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else{
                 JOptionPane.showMessageDialog(this, "Contraseña de confirmacion incorrecta", "Error", JOptionPane.ERROR_MESSAGE);

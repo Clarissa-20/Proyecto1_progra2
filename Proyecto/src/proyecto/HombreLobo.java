@@ -13,7 +13,7 @@ public class HombreLobo extends PiezaPrincipal {
     private boolean movimientoDobleActivo = false;
     
     public HombreLobo(String color){
-        super(ATAQUE_INICIAL, VIDAS_INICIALES, ESCUDO_INICIAL, color, "Hombre Lobo");
+        super(ATAQUE_INICIAL, VIDAS_INICIALES, ESCUDO_INICIAL, color, "HombreLobo");
     }
 
     @Override

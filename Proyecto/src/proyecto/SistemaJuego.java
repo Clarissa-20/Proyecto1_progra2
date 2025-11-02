@@ -48,7 +48,7 @@ public class SistemaJuego implements GestionDatos{
         //validar qeu el password sea exacgtamente de 5 caracteres
         //validar los demas caracteres especiales
         if(password == null || password.length() != 5){
-            JOptionPane.showMessageDialog(null, "ERROR: La contraseña debe ser de 5 caracteres");
+            //JOptionPane.showMessageDialog(null, "ERROR: La contraseña debe ser de 5 caracteres");
             return false;
         }
         
@@ -56,10 +56,11 @@ public class SistemaJuego implements GestionDatos{
         try{
             Player nuevoPlayer = new Player(username, password);
             jugadores.add(nuevoPlayer);
-            JOptionPane.showMessageDialog(null, "Jugador "+username+" creado co exito");
+            System.out.println("Jugador "+username+" creado con exito");
+            //JOptionPane.showMessageDialog(null, "Jugador "+username+" creado con exito");
             return true;
         } catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al crear el jugador: "+e.getMessage());
+            //JOptionPane.showMessageDialog(null, "Error al crear el jugador: "+e.getMessage());
             return false;
         }
     }
@@ -75,10 +76,11 @@ public class SistemaJuego implements GestionDatos{
         
         //verificar la contraseña
         if(p.getPassword().equals(password)){
-            JOptionPane.showMessageDialog(null, "Log In exitoso para: "+username);
+            System.out.println("Log In exitoso para: "+username);
+            //JOptionPane.showMessageDialog(null, "Log In exitoso para: "+username);
             return p;
         } else{
-            JOptionPane.showMessageDialog(null, "ERROR: Usuario o contraseña incorrectos");
+            //JOptionPane.showMessageDialog(null, "ERROR: Usuario o contraseña incorrectos");
             return null;
         }
     }
@@ -145,7 +147,8 @@ public class SistemaJuego implements GestionDatos{
             
             //establece el estado como inactivo
             p.setActivo(false);
-            JOptionPane.showMessageDialog(null, "Cuenta de "+username+" eliminada con exito");
+            System.out.println("Cuenta de "+username+" eliminada con exito");
+            //JOptionPane.showMessageDialog(null, "Cuenta de "+username+" eliminada con exito");
             return true;
         } catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al intentar eliminar la cuenta: "+e.getMessage());
@@ -160,7 +163,7 @@ public class SistemaJuego implements GestionDatos{
         //agg el log al arreglo
         if(log != null){
             logs.add(log);
-            JOptionPane.showMessageDialog(null, "Log de juego guardado");
+            JOptionPane.showMessageDialog(null, "Log del juego guardado");
         }
     }
     

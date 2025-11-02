@@ -32,7 +32,7 @@ public class CasillaPanel extends JPanel{
         
         //manejo del evento de click
         this.addMouseListener(new MouseAdapter(){
-            public void mouseCliked(MouseEvent e){
+            public void mouseClicked(MouseEvent e){
                 //notifica a la vtnJuego las oordenas de la casilla clickeada
                 vtnJuego.manejarClickCasilla(fila, columna);
             }
