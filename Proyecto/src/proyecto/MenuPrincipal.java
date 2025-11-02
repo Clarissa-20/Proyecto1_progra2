@@ -13,7 +13,6 @@ public class MenuPrincipal extends JFrame{
     private Player jugadorActual; //referencia al jugador logeado
 
     public MenuPrincipal(SistemaJuego sistema, Player jugador) {
-        //initComponents();
         this.sistema = sistema;
         this.jugadorActual = jugador;
 

@@ -16,7 +16,6 @@ public class MiCuenta extends JFrame{
     private JTextField txtUsername;
 
     public MiCuenta(SistemaJuego sistema, Player jugador) {
-        //initComponents();
         this.sistema = sistema;
         this.jugadorActual = jugador;
         

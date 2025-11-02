@@ -16,7 +16,6 @@ public class CasillaPanel extends JPanel{
     private vtnJuego vtnJuego; //referenca a la vtn principal para manejar el click vtnPadre
 
     public CasillaPanel(int fila, int columna, vtnJuego vtnJuego) {
-        //initComponents();
         this.fila = fila;
         this.columna = columna;;
         this.vtnJuego = vtnJuego;
@@ -50,7 +49,6 @@ public class CasillaPanel extends JPanel{
                 String color = pieza.getColor();
                 
                 String rutaImg = "/img/"+tipo+color+".png";
-                
                 ImageIcon icon = new ImageIcon(getClass().getResource(rutaImg));
                 
                 //redimensionar si es necesario

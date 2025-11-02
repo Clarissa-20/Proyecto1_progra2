@@ -13,7 +13,6 @@ public class MenuInicio extends JFrame {
     private JPasswordField txtPassword;
 
     public MenuInicio(SistemaJuego sistema) {
-        //initComponents();
         this.sistema = sistema;
         setTitle("Vampire Wargame - Menú Inicio");
         setSize(400, 300);

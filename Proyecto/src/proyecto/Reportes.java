@@ -13,7 +13,6 @@ public class Reportes extends JFrame{
     private Player jugadorActual;
 
     public Reportes(SistemaJuego sistema, Player jugador) {
-        //initComponents();
         this.sistema = sistema;
         this.jugadorActual = jugador;
         

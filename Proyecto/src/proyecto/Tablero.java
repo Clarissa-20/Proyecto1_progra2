@@ -115,7 +115,7 @@ public class Tablero {
             return false;
         }
 
-        //logica de distancia in cluyendo al HL
+        //logica de distancia incluyendo al HL
         double distancia = calcularDistancia(origenFila, origenColumna, destFila, destColumna);
         int maxDistancia = 1;
 
@@ -300,6 +300,7 @@ public class Tablero {
         switch (tipoAtaque) {
             case "normal":
                 danioCausado = atacante.getAtaque();
+                ignorarEscudo = false;
                 if (calcularDistancia(origenFila, origenColumna, destFila, destColumna) > 1) {
                     return "Ataque invalido, solo se puede atacar piezas adyacentes";
                 }
