@@ -7,6 +7,7 @@ package proyecto;
 import javax.swing.JOptionPane;
 
 public abstract class Pieza {
+
     protected int ataque;
     protected int vidas;
     protected int escudo;
@@ -36,22 +37,33 @@ public abstract class Pieza {
     /*metodo final
     logica inmutable de como la pieza recibe daño
     primero se absorbe el daño con el escudo luego afecta las vidas*/
-    public final void recibirDanio(int danio) {
-        //logica de absorcion
-        int danioResidual = danio - this.escudo;
-        if (danioResidual > 0) {
-            //si el daño supera el escudo, queda en 0 y pasa a las vidas
-            this.escudo = 0;
-            this.vidas -= danioResidual;
-
-            if (this.vidas < 0) {
-                this.vidas = 0; //evitar vidas negativas
-            }
+    public final void recibirDanio(int danio, boolean ignorarEscudo) {
+        if (ignorarEscudo) {
+            this.vidas -= danio;
         } else {
-            //si el daño es menor o igual al escudo, solo le reduce el escudo
-            this.escudo -= danio;
+            //logica de absorcion
+            int danioResidual = danio - this.escudo;
+            if (danioResidual > 0) {
+                //si el daño supera el escudo, queda en 0 y pasa a las vidas
+                this.escudo = 0;
+                this.vidas -= danioResidual;
+            } else {
+                //si el daño es menor o igual al escudo, solo le reduce el escudo
+                this.escudo -= danio;
+            }
+        }
+        if (this.vidas < 0) {
+            this.vidas = 0; //evitar vidas negativas
         }
         JOptionPane.showMessageDialog(null, this.tipo + " ha recibido daño.Vidas restantes: " + this.vidas);
+    }
+
+    public void resturarVida(int cantidad) {
+        this.vidas += cantidad;
+
+        /*if(this.vidas > this.vidasMax){
+            this.vidas = this.vidasMax
+;        }*/
     }
 
     public void setPosicion(int fila, int columna) {
@@ -66,12 +78,16 @@ public abstract class Pieza {
     public String getColor() {
         return color;
     }
-    
-    public String getTipo(){
+
+    public String getTipo() {
         return tipo;
     }
-    
-    public int getAtaque(){
+
+    public int getAtaque() {
         return ataque;
+    }
+
+    public int getEscudo() {
+        return escudo;
     }
 }
