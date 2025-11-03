@@ -14,7 +14,7 @@ public class MenuInicio extends JFrame {
     public MenuInicio(SistemaJuego sistema) {
         this.sistema = sistema;
         setTitle("Vampire Wargame - Menú Inicio");
-        setSize(700, 450);
+        setSize(800, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         
@@ -30,8 +30,8 @@ public class MenuInicio extends JFrame {
         fp.add(titulo, BorderLayout.NORTH);
         
         JPanel panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(3, 1, 15, 15));
-        panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 150, 60, 150));
+        panelBotones.setLayout(new GridLayout(4, 1, 15, 15));
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(30, 200, 60, 200));
         panelBotones.setOpaque(false);
         
         JButton btnLogIn = crearBotones("LOG IN");
@@ -59,8 +59,6 @@ public class MenuInicio extends JFrame {
         btn.setForeground(Color.WHITE);
         btn.setBackground(Color.BLACK);
         btn.setPreferredSize(new Dimension(250, 50));
-        /*btn.setOpaque(true);
-        btn.setContentAreaFilled(true);*/
         
         btn.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(color, 5),
