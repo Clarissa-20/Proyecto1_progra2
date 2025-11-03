@@ -20,7 +20,7 @@ public class MiCuenta extends JFrame{
         this.jugadorActual = jugador;
         
         setTitle("Mi Cuenta - "+jugador.getUsername());
-        setSize(400, 450);
+        setSize(800, 550);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(3, 1)); //3 seciones: info, contra, eliminar
         

@@ -24,7 +24,7 @@ public class MenuInicio extends JFrame {
         fp.setLayout(new BorderLayout(20, 20));
         
         JLabel titulo = new JLabel("VAMPIRE WARGAME", SwingConstants.CENTER);
-        titulo.setFont(new Font("Bodoni Bd BT", Font.BOLD, 40));
+        titulo.setFont(new Font("Bodoni Bd BT", Font.BOLD, 50));
         titulo.setForeground(Color.WHITE);
         titulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         fp.add(titulo, BorderLayout.NORTH);
