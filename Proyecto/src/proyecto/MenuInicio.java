@@ -68,7 +68,11 @@ public class MenuInicio extends JFrame {
     }
 
     private void mostrarLogin() {
-        JTextField txtNomUsuario = new JTextField(15);
+        vtnLogin login = new vtnLogin(sistema);
+        login.setVisible(true);
+        this.dispose();
+        
+        /*JTextField txtNomUsuario = new JTextField(15);
         JPasswordField txtContra = new JPasswordField(15);
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -84,11 +88,15 @@ public class MenuInicio extends JFrame {
             String user = txtNomUsuario.getText();
             String contra = new String(txtContra.getPassword());
             manejarLogIn(user, contra);
-        }
+        }*/
     }
     
     private void mostrarCrearPlayer() {
-        JTextField txtNomUsuario = new JTextField(15);
+        vtnCrearPlayer crearPlayer = new vtnCrearPlayer(sistema);
+        crearPlayer.setVisible(true);
+        this.dispose();
+        
+        /*TextField txtNomUsuario = new JTextField(15);
         JPasswordField txtContra = new JPasswordField(15);
 
         JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -104,41 +112,6 @@ public class MenuInicio extends JFrame {
             String user = txtNomUsuario.getText();
             String contra = new String(txtContra.getPassword());
             manejarCrearPlayer(user, contra);
-        }
+        }*/
     }
-    
-    private void manejarLogIn(String user, String contra) {
-        Player playerLogeado = sistema.logIn(user, contra);
-        
-        if (playerLogeado != null) {
-            JOptionPane.showMessageDialog(this, "¡Bienvenido, " + user + "!", "Login Exitoso", JOptionPane.INFORMATION_MESSAGE);
-            MenuPrincipal menuPrincipal = new MenuPrincipal(sistema, playerLogeado);
-            menuPrincipal.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos o no existe.", "Error de Login", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
-    private void manejarCrearPlayer(String user, String contra) {
-        if (contra.length() != 5) {
-            JOptionPane.showMessageDialog(this, "La contraseña debe tener exactamente 5 caracteres.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        boolean exito = sistema.crearPlayer(user, contra);
-        
-        if (exito) {
-            JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
-            Player nuevoPlayer = sistema.logIn(user, contra);
-            if (nuevoPlayer != null) {
-                MenuPrincipal menuPrincipal = new MenuPrincipal(sistema, nuevoPlayer);
-                menuPrincipal.setVisible(true);
-                this.dispose();
-            }
-            
-        } else {
-            JOptionPane.showMessageDialog(this, "Error al crear cuenta. Verifica que el usuario no exista.", "Error de registro", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
 }
