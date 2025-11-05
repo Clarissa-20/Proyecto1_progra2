@@ -303,7 +303,7 @@ public class vtnJuego extends JFrame {
             sistema.guardarLog(log);
 
             JOptionPane.showMessageDialog(this,
-                    "¡" + perdedor.getUsername() + " se ha retirado! ¡" + ganador.getUsername() + " has ganados 3 puntos", "VICTORIA POR RETIRO", JOptionPane.INFORMATION_MESSAGE);
+                    "¡" + perdedor.getUsername() + " se ha retirado! ¡Felicidades jugador " + ganador.getUsername() + ", has ganados 3 puntos!", "VICTORIA POR RETIRO", JOptionPane.INFORMATION_MESSAGE);
 
             new MenuPrincipal(sistema, ganador).setVisible(true);
             this.dispose();
@@ -322,7 +322,7 @@ public class vtnJuego extends JFrame {
         sistema.guardarLog(log);
 
         //mostrar msj y volver al menu principal
-        JOptionPane.showMessageDialog(this, "¡Juego Terminado! El ganador es: " + ganador.getUsername(), "VICTORIA", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "¡Juego Terminado! El jugador " + ganador.getUsername()+" vencio al jugador "+perdedor.getUsername()+". Has ganado 3 puntos", "VICTORIA", JOptionPane.INFORMATION_MESSAGE);
 
         //cierra la vtn de juego y abre la principal, pendiente reabrir el menu principal
         new MenuPrincipal(sistema, ganador).setVisible(true);

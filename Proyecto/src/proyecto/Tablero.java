@@ -87,7 +87,7 @@ public class Tablero {
         //seleccionar una pieza al azar, simulacion de la ruleta
         int indiceAleatorio = random.nextInt(piezasDisponibles.size());
         Pieza piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
-        JOptionPane.showMessageDialog(null, "La ruleta selecciono: " + piezaSeleccionada.getTipo() + " de " + colorTurno);
+        JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaSeleccionada.getTipo() + " de " + colorTurno);
         return piezaSeleccionada.getTipo();
     }
 
@@ -340,7 +340,7 @@ public class Tablero {
 
         //verificar despues de los ataques si la pieza fue destruida
         if (defensor.getVidas() <= 0) {
-            mensaje = "¡SE DESTRUYO LA PIEZA " + defensor.getTipo() + "DEL JUGADOR" + defensor.getColor() + "!";
+            mensaje = "¡SE DESTRUYO LA PIEZA " + defensor.getTipo().toUpperCase() + " DEL JUGADOR " + defensor.getColor().toUpperCase() + "!";
             matriz[destFila][destColumna] = null;
         } else {
             mensaje = String.format("SE ATACO PIEZA %s Y SE HA QUITADO %d PUNTOS. LE QUEDAN %d PUNTOS DE ESCUDO Y %d VIDAS",
