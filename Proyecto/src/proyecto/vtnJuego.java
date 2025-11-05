@@ -29,6 +29,12 @@ public class vtnJuego extends JFrame {
 
     private String piezaPermitida = null;
     private int girosRestantes = 1; //por defaut
+    
+    private JLabel imgRuleta;
+    private JLabel ruletaGif;
+    private JPanel panelRuleta;
+    private static final String[] opcRuleya = {"Vampiro", "HombreLobo", "Muerte"};
+    private static final int tiempoGiro = 2000;
 
     public vtnJuego(SistemaJuego sistema, Player p1, Player p2) {
         //initComponents();
@@ -66,22 +72,49 @@ public class vtnJuego extends JFrame {
         JPanel panelControl = new JPanel();
         panelControl.setLayout(new GridLayout(6, 1, 10, 10));
         panelControl.setBorder(BorderFactory.createTitledBorder("Control de Juego"));
+        panelControl.setPreferredSize(new Dimension(200, 0));
 
         //info turno
         turnoInfo = new JLabel("Turno Actual: " + turnoActual, SwingConstants.CENTER);
+        turnoInfo.setAlignmentX(Component.CENTER_ALIGNMENT); //
         panelControl.add(turnoInfo);
+        panelControl.add(Box.createVerticalStrut(10));
+        
+        //panel de la ruleta
+        panelRuleta = new JPanel();
+        panelRuleta.setLayout(new CardLayout());
+        panelRuleta.setOpaque(false);
+        
+        imgRuleta = new JLabel(new ImageIcon(getClass().getResource("/img/ruleta.png")));
+        imgRuleta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        ruletaGif = new JLabel(new ImageIcon(getClass().getResource("/img/ruleta.gif")));
+        ruletaGif.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        panelRuleta.add(imgRuleta, "ESTATICA");
+        panelRuleta.add(ruletaGif, "GIRANDO");
+        
+        ((CardLayout) panelRuleta.getLayout()).show(panelRuleta, "ESTATICA");
+        panelControl.add(panelRuleta);
+        panelControl.add(Box.createVerticalStrut(10));
 
         //ruleta y pieza selec
         btnRuleta = new JButton("GIRAR RULETA");
-        piezaSeleccionada = new JLabel("Pieza a Mover: Ninguna", SwingConstants.CENTER);
+        btnRuleta.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelControl.add(btnRuleta);
+        panelControl.add(Box.createVerticalStrut(10));
+        
+        piezaSeleccionada = new JLabel("Pieza a Mover: Ninguna", SwingConstants.CENTER);
+        piezaSeleccionada.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelControl.add(piezaSeleccionada);
+        panelControl.add(Box.createVerticalStrut(20));
 
         //btns de ataque especial, se activan por turno, pendientes hasta implementar la ruleta
         //btn retirar
         btnRetirar = new JButton("RETIRAR");
         btnRetirar.setBackground(Color.RED);
         btnRetirar.setForeground(Color.WHITE);
+        btnRetirar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelControl.add(btnRetirar);
 
         btnRuleta.addActionListener(e -> manejarRuleta());

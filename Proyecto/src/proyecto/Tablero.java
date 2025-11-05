@@ -67,15 +67,17 @@ public class Tablero {
     //logica del turno
     //Pieza - String
     public String seleccionarPiezaAlAzar(String colorTurno) {
-        ArrayList<Pieza> piezasDisponibles = new ArrayList<>();
+        //ArrayList<Pieza> piezasDisponibles = new ArrayList<>();
+        ArrayList<String> piezasDisponibles = new ArrayList<>();
 
         //recorrer el tablero para encontrar todas las piezas del colorTurno
         for (int i = 0; i < tamaño; i++) {
             for (int j = 0; j < tamaño; j++) {
                 Pieza p = matriz[i][j];
                 if (p != null && p.getColor().equals(colorTurno) && p.getVidas() > 0) {
-                    if (p.getTipo().equals("Vampiro") || p.getTipo().equals("HombreLobo") || p.getTipo().equals("Muerte")) {
-                        piezasDisponibles.add(p);
+                    String tipo = p.getTipo(); //agg
+                    if ((tipo.equals("Vampiro") || tipo.equals("HombreLobo") || tipo.equals("Muerte")) && !piezasDisponibles.contains(tipo)) {
+                        piezasDisponibles.add(tipo);
                     }
                 }
             }
@@ -86,9 +88,10 @@ public class Tablero {
 
         //seleccionar una pieza al azar, simulacion de la ruleta
         int indiceAleatorio = random.nextInt(piezasDisponibles.size());
-        Pieza piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
-        JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaSeleccionada.getTipo() + " de " + colorTurno);
-        return piezaSeleccionada.getTipo();
+        String piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
+        //Pieza piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
+        //JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaSeleccionada.getTipo() + " de " + colorTurno);
+        return piezaSeleccionada; //.getTipo();
     }
 
     public boolean tienePiezasDeTipo(String color, String tipo) {
