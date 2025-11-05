@@ -174,7 +174,7 @@ public class vtnJuego extends JFrame {
                 origenColumna = columna;
                 piezaSelec = true;
                 tableroVisual[fila][columna].resaltar(Color.GREEN);
-                JOptionPane.showMessageDialog(null, "Piezaseleccionada:" + piezaClickeada.getTipo() + ". Selecciona la casilla destino");
+                JOptionPane.showMessageDialog(null, "Piezaseleccionada: " + piezaClickeada.getTipo() + ". Selecciona la casilla destino");
             } else {
                 //error de selecion
                 JOptionPane.showMessageDialog(this, "Selecciona una pieza valida de tu color y seleccionada por la ruleta (" + piezaPermitida + ")", "Error", JOptionPane.ERROR_MESSAGE);
@@ -304,6 +304,7 @@ public class vtnJuego extends JFrame {
 
             JOptionPane.showMessageDialog(this,
                     "¡" + perdedor.getUsername() + " se ha retirado! ¡Felicidades jugador " + ganador.getUsername() + ", has ganados 3 puntos!", "VICTORIA POR RETIRO", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("RETIRO: jugador "+perdedor.getUsername()+" se ha retirado de la partida. Jugador "+ganador.getUsername()+" has ganado");
 
             new MenuPrincipal(sistema, ganador).setVisible(true);
             this.dispose();
@@ -323,7 +324,7 @@ public class vtnJuego extends JFrame {
 
         //mostrar msj y volver al menu principal
         JOptionPane.showMessageDialog(this, "¡Juego Terminado! El jugador " + ganador.getUsername()+" vencio al jugador "+perdedor.getUsername()+". Has ganado 3 puntos", "VICTORIA", JOptionPane.INFORMATION_MESSAGE);
-
+        System.out.println("FIN JUEGO: jugador "+ganador.getUsername()+" has ganado la partida. Perdedor: "+perdedor.getUsername());
         //cierra la vtn de juego y abre la principal, pendiente reabrir el menu principal
         new MenuPrincipal(sistema, ganador).setVisible(true);
         this.dispose();

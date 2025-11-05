@@ -30,7 +30,9 @@ public class vtnCrearPlayer extends JFrame{
         
         
         JTextField txtNomUsuario = new JTextField(15);
+        txtNomUsuario.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         JPasswordField txtContra = new JPasswordField(15);
+        txtContra.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         
         txtNomUsuario.setBackground(Color.BLACK);
         txtNomUsuario.setForeground(Color.WHITE);

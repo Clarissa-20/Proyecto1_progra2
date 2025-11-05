@@ -344,7 +344,7 @@ public class Tablero {
             matriz[destFila][destColumna] = null;
         } else {
             mensaje = String.format("SE ATACO PIEZA %s Y SE HA QUITADO %d PUNTOS. LE QUEDAN %d PUNTOS DE ESCUDO Y %d VIDAS",
-                    defensor.getTipo(), danioCausado, defensor.getEscudo(), defensor.getVidas());
+                    defensor.getTipo().toUpperCase(), danioCausado, defensor.getEscudo(), defensor.getVidas());
         }
         return mensaje;
     }

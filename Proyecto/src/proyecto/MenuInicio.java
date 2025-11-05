@@ -71,47 +71,11 @@ public class MenuInicio extends JFrame {
         vtnLogin login = new vtnLogin(sistema);
         login.setVisible(true);
         this.dispose();
-        
-        /*JTextField txtNomUsuario = new JTextField(15);
-        JPasswordField txtContra = new JPasswordField(15);
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Usuario:"));
-        panel.add(txtNomUsuario);
-        panel.add(new JLabel("Contraseña:"));
-        panel.add(txtContra);
-
-        int resultado = JOptionPane.showConfirmDialog(this, panel, 
-                 "Iniciar Sesión", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (resultado == JOptionPane.OK_OPTION) {
-            String user = txtNomUsuario.getText();
-            String contra = new String(txtContra.getPassword());
-            manejarLogIn(user, contra);
-        }*/
     }
     
     private void mostrarCrearPlayer() {
         vtnCrearPlayer crearPlayer = new vtnCrearPlayer(sistema);
         crearPlayer.setVisible(true);
         this.dispose();
-        
-        /*TextField txtNomUsuario = new JTextField(15);
-        JPasswordField txtContra = new JPasswordField(15);
-
-        JPanel panel = new JPanel(new GridLayout(0, 1));
-        panel.add(new JLabel("Usuario (debe ser único):"));
-        panel.add(txtNomUsuario);
-        panel.add(new JLabel("Contraseña (exactamente 5 caracteres):"));
-        panel.add(txtContra);
-
-        int resultado = JOptionPane.showConfirmDialog(this, panel, 
-                 "Crear Nuevo Jugador", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-        if (resultado == JOptionPane.OK_OPTION) {
-            String user = txtNomUsuario.getText();
-            String contra = new String(txtContra.getPassword());
-            manejarCrearPlayer(user, contra);
-        }*/
     }
 }

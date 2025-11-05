@@ -35,8 +35,10 @@ public class vtnLogin extends JFrame{
         
         txtNomUsuario.setBackground(Color.BLACK);
         txtNomUsuario.setForeground(Color.WHITE);
+        txtNomUsuario.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         txtContra.setBackground(Color.BLACK);
         txtContra.setForeground(Color.WHITE);
+        txtContra.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         
         JPanel panel = new JPanel(new GridLayout(4, 1, 5, 5));
         panel.setOpaque(false);
