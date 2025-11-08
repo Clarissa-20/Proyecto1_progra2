@@ -141,52 +141,6 @@ public class Tablero {
         matriz[origenFila][origenColumna] = null;
         piezaOrigen.setPosicion(destFila, destColumna);
         return true;
-
-        /*if (piezaOrigen == null) {
-            JOptionPane.showMessageDialog(null, "ERROR: No hay pieza en la casilla de origen");
-            return false;
-        }
-
-        //validar si el movimiento es valido segun las reglas de la pieza
-        if (!piezaOrigen.esMovimientoValido(destFila, destColumna)) {
-            JOptionPane.showMessageDialog(null, "ERROR: Movimiento invalido para " + piezaOrigen.getTipo());
-            return false;
-        }
-
-        //casilla de destino vacia (mivimiento)
-        if (piezaDestino == null) {
-            //mover la pieza
-            matriz[destFila][destColumna] = piezaOrigen;
-            matriz[origenFila][origenColumna] = null;
-            piezaOrigen.setPosicion(destFila, destColumna);
-            JOptionPane.showMessageDialog(null, "Movimiento exitoso a (" + destFila + ", " + destColumna + ")");
-            return true;
-        }
-
-        //casilla de destino ocupada por pieza propia
-        if (piezaDestino.getColor().equals(piezaOrigen.getColor())) {
-            JOptionPane.showMessageDialog(null, "ERROR: Casilla de destino ocupada por pieza propia");
-            return false;
-        }
-
-        //casilla de destino ocipada por pieza enemiga(ataque normal)
-        if (!piezaDestino.getColor().equals(piezaOrigen.getColor())) {
-            //aqui se asume que es ataque normal, el especial debe ser manejada antes de llamar a este metodo, poner un boton
-
-            int danio = piezaOrigen.getAtaque(); //ataque base de la pieza
-            piezaDestino.recibirDanio(danio);
-            JOptionPane.showMessageDialog(null, piezaOrigen.getTipo() + " ataca a " + piezaDestino.getTipo() + ". Daño: " + danio);
-
-            //si la oieza enemiga muere
-            if (piezaDestino.getVidas() <= 0) {
-                JOptionPane.showMessageDialog(null, piezaDestino.getTipo() + " ha sido DESTRUIDA.");
-                matriz[destFila][destColumna] = piezaOrigen; //la pieza atacante ocupa la posicion
-                matriz[origenFila][origenColumna] = null; //la casilla origen queda vacia
-                piezaOrigen.setPosicion(destFila, destColumna);
-            }
-            return true; //si la pieza rival no muere, lapieza origen regresa a su casilla
-        }
-        return false;*/
     }
 
     //contar el numero de piezas vicas que le quedan al jugador
