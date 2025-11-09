@@ -36,6 +36,10 @@ public class vtnJuego extends JFrame {
     private JPanel panelRuleta;
     private static final String[] opcRuleta = {"Vampiro", "HombreLobo", "Muerte"};
     private static final int tiempoGiro = 3000;
+    
+    private JPanel cementerioNegro;
+    private JPanel cementerioBlanco;
+    private JLabel jugadorActual;
 
     public vtnJuego(SistemaJuego sistema, Player p1, Player p2) {
         this.sistema = sistema;
@@ -45,8 +49,8 @@ public class vtnJuego extends JFrame {
         this.tableroVisual = new CasillaPanel[6][6];
         this.turnoActual = "Negro"; //este empieza
 
-        setTitle("Vampire Wargame - Turno: " + turnoActual);
-        setSize(900, 600);
+        setTitle("Vampire Wargame - Juego");
+        setSize(1500, 800);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -59,8 +63,15 @@ public class vtnJuego extends JFrame {
                 panelTablero.add(casilla);
             }
         }
-        add(panelTablero, BorderLayout.CENTER);
+        
+        panelTablero.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
         add(panelControl(), BorderLayout.EAST);
+        add(panelJugadoresInfo(), BorderLayout.NORTH);
+        
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        panelCentral.add(panelCementerios(), BorderLayout.WEST);
+        panelCentral.add(panelTablero, BorderLayout.CENTER);
+        add(panelCentral, BorderLayout.CENTER);
 
         /*crear el panle del control
         ruleta, info de turno, btn de retirar*/
@@ -68,10 +79,90 @@ public class vtnJuego extends JFrame {
         actualizarTableroVisual();
     }
 
+    private JPanel panelJugadoresInfo(){
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
+        panel.setPreferredSize(new Dimension(50, 50));
+        jugadorActual = new JLabel();
+        jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        
+        /*JLabel jugadorNegro = new JLabel("Negro: "+jugador1.getUsername());
+        jugadorNegro.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        JLabel jugadorBlanco = new JLabel("Blanco: "+jugador2.getUsername());
+        jugadorBlanco.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        
+        panel.add(jugadorNegro);
+        panel.add(jugadorBlanco);*/
+        panel.add(jugadorActual); 
+        
+        return panel;
+    }
+    
+    private JPanel panelCementerios(){
+        JPanel panelPrincipal = new JPanel(new GridLayout(2, 1));
+        panelPrincipal.setPreferredSize(new Dimension(300, 0));
+        panelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
+        
+        /*JLabel titulo1 = new JLabel("Capturas de: "+jugador1.getUsername());
+        titulo1.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
+        titulo1.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));*/
+        cementerioNegro = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
+        /*cementerioNegro.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
+        cementerioNegro.setAlignmentX(Component.CENTER_ALIGNMENT);*/
+        cementerioNegro.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador1.getUsername()));
+        
+        /*JLabel titulo2 = new JLabel("Capturas de: "+jugador2.getUsername());
+        titulo2.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
+        titulo2.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));*/
+        cementerioBlanco = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
+        /*cementerioBlanco.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
+        cementerioBlanco.setAlignmentX(Component.CENTER_ALIGNMENT);*/
+        cementerioBlanco.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador2.getUsername()));
+        
+        /*cementerioNegro.add(titulo1);
+        cementerioBlanco.add(titulo2);*/
+        panelPrincipal.add(cementerioNegro);
+        panelPrincipal.add(cementerioBlanco);
+        
+        return panelPrincipal;
+    }
+    
+    private void actualizarInfoJugador(){
+        turnoInfo.setText("Turno Actual: "+turnoActual);
+        
+        String nombreJugador = turnoActual.equals("Negro") ? jugador1.getUsername() : jugador2.getUsername();
+        jugadorActual.setText("Turno: "+nombreJugador);
+        jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 25));
+        jugadorActual.setForeground(turnoActual.equals("Negro") ? Color.BLACK : Color.WHITE);
+        jugadorActual.setOpaque(false);
+        jugadorActual.setBackground(turnoActual.equals("Negro") ? Color.WHITE : Color.BLACK);
+        
+    }
+    
+    public void actualizarCementerio(){
+        
+        cementerioNegro.removeAll();
+        
+        cementerioBlanco.removeAll();
+        
+        cementerioNegro.revalidate();
+        cementerioNegro.repaint();
+        cementerioBlanco.revalidate();
+        cementerioBlanco.repaint();
+    }
+    
+    private JLabel piezaCementerio(Pieza p ){
+        String rutaImg = "/img"+p.getColor().toLowerCase()+p.getTipo()+".png";
+        final int tamañoCementerio = 40;
+        return getScaledLabel(rutaImg, tamañoCementerio, tamañoCementerio);
+    }
+    
     private JLabel getScaledLabel(String path, int width, int height){
         ImageIcon originalIcon = new ImageIcon(getClass().getResource(path));
         Image originalImage = originalIcon.getImage();
-        // Escalar la imagen a las dimensiones deseadas
+        
         Image scaledImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         JLabel label = new JLabel(new ImageIcon(scaledImage));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -80,10 +171,15 @@ public class vtnJuego extends JFrame {
     
     private JPanel panelControl() {
         JPanel panelControl = new JPanel();
-        //panelControl.setLayout(new GridLayout(6, 1, 10, 10));
         panelControl.setLayout(new BoxLayout(panelControl, BoxLayout.Y_AXIS));
-        panelControl.setBorder(BorderFactory.createTitledBorder("Control de Juego"));
+        panelControl.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
         panelControl.setPreferredSize(new Dimension(300, 0));
+        
+        JLabel control = new JLabel("CONTROL JUEGO");
+        control.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
+        control.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+        control.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panelControl.add(control);
 
         final int tamañoRuleta = 280;
         
@@ -100,7 +196,6 @@ public class vtnJuego extends JFrame {
         panelRuleta.setPreferredSize(new Dimension(tamañoRuleta, tamañoRuleta));
 
         imgRuleta = getScaledLabel("/img/ruleta.png", tamañoRuleta, tamañoRuleta);
-        //ruletaGif = getScaledLabel("/img/gifRuleta.gif", tamañoRuleta, tamañoRuleta);
         ImageIcon gifIcon = new ImageIcon(getClass().getResource("/img/gifRuleta.gif"));
         Image gifImg = gifIcon.getImage();
         Image scaledGif = gifImg.getScaledInstance(tamañoRuleta, tamañoRuleta, Image.SCALE_DEFAULT);
@@ -203,7 +298,6 @@ public class vtnJuego extends JFrame {
                 tableroVisual[i][j].desresaltar(); //limpia cualquer resultado anterior
             }
         }
-        setTitle("Vampire Wargame - Turno: " + turnoActual);
     }
 
     //logica que se ejecuta cada vez que el usuario hace click en una casilla
@@ -334,6 +428,7 @@ public class vtnJuego extends JFrame {
             }
             if (exito) {
                 actualizarTableroVisual();
+                actualizarCementerio();
                 if (tablero.contarPiezasVivas(getOponenteColor()) == 0) {
                     manejarFinJuego();
                 } else {
@@ -350,12 +445,13 @@ public class vtnJuego extends JFrame {
 
     private void cambiarTurno() {
         turnoActual = turnoActual.equals("Negro") ? "Blanco" : "Negro";
-        setTitle("Vampire Wargame - Turno: " + turnoActual);
         btnRuleta.setEnabled(true);
         
         final int tamañoRuleta = 280;
         imgRuleta.setIcon(getScaledLabel("/img/ruleta.png", tamañoRuleta, tamañoRuleta).getIcon());
         ((CardLayout) panelRuleta.getLayout()).show(panelRuleta, "ESTATICA");
+        
+        actualizarInfoJugador();
         
         piezaPermitida = null;
         piezaSeleccionada.setText("Pieza a mover: Ninguna");
