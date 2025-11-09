@@ -159,8 +159,8 @@ public class vtnJuego extends JFrame {
     }
     
     private JLabel piezaACementerio(Pieza p ){
-        String rutaImg = "/img/"+p.getColor().toLowerCase()+p.getTipo()+".png";
-        final int tamañoCementerio = 40;
+        String rutaImg = "/img/"+p.getTipo()+p.getColor().toLowerCase()+".png";
+        final int tamañoCementerio = 100;
         return getScaledLabel(rutaImg, tamañoCementerio, tamañoCementerio);
     }
     

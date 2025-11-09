@@ -319,7 +319,7 @@ public class Tablero {
             mensaje = "¡SE DESTRUYO LA PIEZA " + defensor.getTipo().toUpperCase() + " DEL JUGADOR " + defensor.getColor().toUpperCase() + "!";
             matriz[destFila][destColumna] = null;
         } else {
-            mensaje = String.format("SE ATACO PIEZA %s Y SE HA QUITADO %d PUNTOS. LE QUEDAN %d PUNTOS DE ESCUDO Y %d VIDAS",
+            mensaje = String.format("SE ATACO PIEZA %s DEL JUGADOR "+defensor.getColor().toUpperCase()+" Y SE HA QUITADO %d PUNTOS. LE QUEDAN %d PUNTOS DE ESCUDO Y %d VIDAS",
                     defensor.getTipo().toUpperCase(), danioCausado, defensor.getEscudo(), defensor.getVidas());
         }
         return mensaje;
