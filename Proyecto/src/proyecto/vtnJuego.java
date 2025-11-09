@@ -7,6 +7,8 @@ package proyecto;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 public class vtnJuego extends JFrame {
 
@@ -47,15 +49,19 @@ public class vtnJuego extends JFrame {
         this.jugador2 = p2;
         this.tablero = new Tablero(); //inicializa el tablero
         this.tableroVisual = new CasillaPanel[6][6];
-        this.turnoActual = "Negro"; //este empieza
+        this.turnoActual = "Blanco"; //este empieza
 
         setTitle("Vampire Wargame - Juego");
         setSize(1500, 800);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+        
+        fondoPanel fp = new fondoPanel("/img/fondoJuego.png");
+        fp.setLayout(new BorderLayout());
+        setContentPane(fp);
 
         //crear el panel del tablero visual
         JPanel panelTablero = new JPanel(new GridLayout(6, 6));
+        panelTablero.setOpaque(false);
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
                 CasillaPanel casilla = new CasillaPanel(i, j, this);
@@ -65,13 +71,15 @@ public class vtnJuego extends JFrame {
         }
         
         panelTablero.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
-        add(panelControl(), BorderLayout.EAST);
-        add(panelJugadoresInfo(), BorderLayout.NORTH);
+        fp.add(panelControl(), BorderLayout.EAST);
+        fp.add(panelJugadoresInfo(), BorderLayout.NORTH);
         
         JPanel panelCentral = new JPanel(new BorderLayout());
+        panelCentral.setOpaque(false);
+        panelCentral.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         panelCentral.add(panelCementerios(), BorderLayout.WEST);
         panelCentral.add(panelTablero, BorderLayout.CENTER);
-        add(panelCentral, BorderLayout.CENTER);
+        fp.add(panelCentral, BorderLayout.CENTER);
 
         /*crear el panle del control
         ruleta, info de turno, btn de retirar*/
@@ -81,6 +89,7 @@ public class vtnJuego extends JFrame {
 
     private JPanel panelJugadoresInfo(){
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
         panel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
@@ -88,13 +97,6 @@ public class vtnJuego extends JFrame {
         jugadorActual = new JLabel();
         jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         
-        /*JLabel jugadorNegro = new JLabel("Negro: "+jugador1.getUsername());
-        jugadorNegro.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
-        JLabel jugadorBlanco = new JLabel("Blanco: "+jugador2.getUsername());
-        jugadorBlanco.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
-        
-        panel.add(jugadorNegro);
-        panel.add(jugadorBlanco);*/
         panel.add(jugadorActual); 
         
         return panel;
@@ -102,27 +104,26 @@ public class vtnJuego extends JFrame {
     
     private JPanel panelCementerios(){
         JPanel panelPrincipal = new JPanel(new GridLayout(2, 1));
+        panelPrincipal.setOpaque(false);
         panelPrincipal.setPreferredSize(new Dimension(300, 0));
         panelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
         
-        /*JLabel titulo1 = new JLabel("Capturas de: "+jugador1.getUsername());
-        titulo1.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
-        titulo1.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));*/
-        cementerioNegro = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
-        /*cementerioNegro.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
-        cementerioNegro.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-        cementerioNegro.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador1.getUsername()));
+        cementerioNegro = new fondoPanel("/img/pergamino.jpeg");
+        cementerioNegro.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
+        cementerioNegro.setOpaque(false);
+        Border bn = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "Capturas de: "+jugador1.getUsername(), 
+                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.WHITE);
+        cementerioNegro.setBorder(bn);
+        //cementerioNegro.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador1.getUsername()));
         
-        /*JLabel titulo2 = new JLabel("Capturas de: "+jugador2.getUsername());
-        titulo2.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
-        titulo2.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));*/
-        cementerioBlanco = new JPanel(new FlowLayout(FlowLayout.LEFT, 2, 2));
-        /*cementerioBlanco.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
-        cementerioBlanco.setAlignmentX(Component.CENTER_ALIGNMENT);*/
-        cementerioBlanco.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador2.getUsername()));
+        cementerioBlanco = new fondoPanel("/img/pergamino.jpeg");
+        cementerioBlanco.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
+        cementerioBlanco.setOpaque(false);
+        Border bb = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "Capturas de: "+jugador1.getUsername(), 
+                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.WHITE);
+        cementerioBlanco.setBorder(bb);
+        //cementerioBlanco.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador2.getUsername()));
         
-        /*cementerioNegro.add(titulo1);
-        cementerioBlanco.add(titulo2);*/
         panelPrincipal.add(cementerioNegro);
         panelPrincipal.add(cementerioBlanco);
         
@@ -130,14 +131,11 @@ public class vtnJuego extends JFrame {
     }
     
     private void actualizarInfoJugador(){
-        turnoInfo.setText("Turno Actual: "+turnoActual);
-        
         String nombreJugador = turnoActual.equals("Negro") ? jugador1.getUsername() : jugador2.getUsername();
-        jugadorActual.setText("Turno: "+nombreJugador);
-        jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 25));
-        jugadorActual.setForeground(turnoActual.equals("Negro") ? Color.BLACK : Color.WHITE);
+        jugadorActual.setText("Turno: "+nombreJugador+" - "+turnoActual);
+        jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 30));
+        jugadorActual.setForeground(Color.WHITE);
         jugadorActual.setOpaque(false);
-        jugadorActual.setBackground(turnoActual.equals("Negro") ? Color.WHITE : Color.BLACK);
         
     }
     
@@ -175,28 +173,26 @@ public class vtnJuego extends JFrame {
     }
     
     private JPanel panelControl() {
-        JPanel panelControl = new JPanel();
+        fondoPanel panelControl = new fondoPanel("/img/pergamino.jpeg");
         panelControl.setLayout(new BoxLayout(panelControl, BoxLayout.Y_AXIS));
+        
         panelControl.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
         panelControl.setPreferredSize(new Dimension(300, 0));
         
         JLabel control = new JLabel("CONTROL JUEGO");
-        control.setFont(new Font("Bodoni Bd BT", Font.BOLD, 18));
+        control.setFont(new Font("Bodoni Bd BT", Font.BOLD, 30));
+        control.setForeground(Color.WHITE);
         control.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
         control.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //control.setOpaque(false);
         panelControl.add(control);
 
         final int tamañoRuleta = 280;
-        
-        //info turno
-        turnoInfo = new JLabel("Turno Actual: " + turnoActual, SwingConstants.CENTER);
-        turnoInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panelControl.add(turnoInfo);
-        panelControl.add(Box.createVerticalStrut(10));
 
         //panel de la ruleta
         panelRuleta = new JPanel();
         panelRuleta.setLayout(new CardLayout());
+        panelRuleta.setOpaque(false);
         panelRuleta.setOpaque(false);
         panelRuleta.setPreferredSize(new Dimension(tamañoRuleta, tamañoRuleta));
 
@@ -217,21 +213,33 @@ public class vtnJuego extends JFrame {
         //ruleta y pieza selec
         btnRuleta = new JButton("GIRAR RULETA");
         btnRuleta.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnRuleta.setPreferredSize(new Dimension(250, 50));
+        btnRuleta.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        btnRuleta.setForeground(new Color(255, 204, 51));
+        btnRuleta.setBackground(Color.BLACK);
+        btnRuleta.setBorder(BorderFactory.createLineBorder(new Color(255, 204, 51),5));
         panelControl.add(btnRuleta);
-        panelControl.add(Box.createVerticalStrut(10));
+        panelControl.add(Box.createVerticalStrut(60));
 
         piezaSeleccionada = new JLabel("Pieza a Mover: Ninguna", SwingConstants.CENTER);
         piezaSeleccionada.setAlignmentX(Component.CENTER_ALIGNMENT);
+        piezaSeleccionada.setForeground(Color.BLACK);
+        piezaSeleccionada.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        piezaSeleccionada.setOpaque(false);
         panelControl.add(piezaSeleccionada);
-        panelControl.add(Box.createVerticalStrut(20));
+        panelControl.add(Box.createVerticalStrut(40));
 
         //btns de ataque especial, se activan por turno, pendientes hasta implementar la ruleta
         //btn retirar
         btnRetirar = new JButton("RETIRAR");
-        btnRetirar.setBackground(Color.RED);
+        btnRetirar.setPreferredSize(new Dimension(250, 50));
+        btnRetirar.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
+        btnRetirar.setBackground(new Color(153, 0, 0));
         btnRetirar.setForeground(Color.WHITE);
+        btnRetirar.setBorder(BorderFactory.createLineBorder(Color.WHITE,5));
         btnRetirar.setAlignmentX(Component.CENTER_ALIGNMENT);
         panelControl.add(btnRetirar);
+        panelControl.add(Box.createVerticalStrut(90));
 
         btnRuleta.addActionListener(e -> manejarRuleta());
         btnRetirar.addActionListener(e -> manejarRetirarse());

@@ -52,7 +52,7 @@ public class CasillaPanel extends JPanel{
                 ImageIcon icon = new ImageIcon(getClass().getResource(rutaImg));
                 
                 //redimensionar si es necesario
-                Image img = icon.getImage().getScaledInstance(140, 140, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(130, 130, Image.SCALE_SMOOTH);
                 imgPieza.setIcon(new ImageIcon(img));
             } catch(Exception e){
                 System.err.println("Error cargando la imagen para "+pieza.getTipo()+": "+e.getMessage());
