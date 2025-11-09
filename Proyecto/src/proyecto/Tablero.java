@@ -4,6 +4,7 @@
  */
 package proyecto;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
@@ -19,10 +20,23 @@ public class Tablero {
     //constante para los puntos de victoria
     public static final int puntosVictoria = 3;
 
+    private List<Pieza> capturadasNegro;
+    private List<Pieza> capturadasBlanco;
+
     public Tablero() {
         this.matriz = new Pieza[tamaño][tamaño];
         this.random = new Random();
+        this.capturadasNegro = new ArrayList<>();
+        this.capturadasBlanco = new ArrayList<>();
         inicializarTablero();
+    }
+
+    public List<Pieza> getPiezasCapturadas(String colorJugador) {
+        if (colorJugador.equals("Negro")) {
+            return capturadasNegro;
+        } else {
+            return capturadasBlanco;
+        }
     }
 
     public Pieza getPieza(int fila, int columna) {
@@ -75,7 +89,7 @@ public class Tablero {
             for (int j = 0; j < tamaño; j++) {
                 Pieza p = matriz[i][j];
                 if (p != null && p.getColor().equals(colorTurno) && p.getVidas() > 0) {
-                    String tipo = p.getTipo(); //agg
+                    String tipo = p.getTipo();
                     if ((tipo.equals("Vampiro") || tipo.equals("HombreLobo") || tipo.equals("Muerte")) && !piezasDisponibles.contains(tipo)) {
                         piezasDisponibles.add(tipo);
                     }
@@ -297,6 +311,11 @@ public class Tablero {
 
         //verificar despues de los ataques si la pieza fue destruida
         if (defensor.getVidas() <= 0) {
+            if (defensor.getColor().equals("Blanco")) {
+                capturadasNegro.add(defensor);
+            } else {
+                capturadasBlanco.add(defensor);
+            }
             mensaje = "¡SE DESTRUYO LA PIEZA " + defensor.getTipo().toUpperCase() + " DEL JUGADOR " + defensor.getColor().toUpperCase() + "!";
             matriz[destFila][destColumna] = null;
         } else {

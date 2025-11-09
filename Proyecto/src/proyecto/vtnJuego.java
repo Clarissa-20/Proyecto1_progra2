@@ -142,10 +142,15 @@ public class vtnJuego extends JFrame {
     }
     
     public void actualizarCementerio(){
-        
         cementerioNegro.removeAll();
+        for(Pieza p : tablero.getPiezasCapturadas("Negro")){
+            cementerioNegro.add(piezaACementerio(p));
+        }
         
         cementerioBlanco.removeAll();
+        for(Pieza p : tablero.getPiezasCapturadas("Blanco")){
+            cementerioBlanco.add(piezaACementerio(p));
+        }
         
         cementerioNegro.revalidate();
         cementerioNegro.repaint();
@@ -153,8 +158,8 @@ public class vtnJuego extends JFrame {
         cementerioBlanco.repaint();
     }
     
-    private JLabel piezaCementerio(Pieza p ){
-        String rutaImg = "/img"+p.getColor().toLowerCase()+p.getTipo()+".png";
+    private JLabel piezaACementerio(Pieza p ){
+        String rutaImg = "/img/"+p.getColor().toLowerCase()+p.getTipo()+".png";
         final int tamañoCementerio = 40;
         return getScaledLabel(rutaImg, tamañoCementerio, tamañoCementerio);
     }

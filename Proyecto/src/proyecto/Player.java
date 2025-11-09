@@ -12,6 +12,7 @@ public class Player {
     private int puntos;
     private LocalDate fechaIngreso;
     private boolean activo;
+    //private String color;
     
     public Player(String username, String password){
         this.username = username;
@@ -19,6 +20,7 @@ public class Player {
         this.puntos = 0;
         this.fechaIngreso = LocalDate.now();
         this.activo = true;
+        //this.color = color;
     }
     
     public String getUsername(){
@@ -36,6 +38,10 @@ public class Player {
     public int getPuntos(){
         return puntos;
     }
+    
+    /*public String getColor(){
+        return color;
+    }*/
     
     public void agregarPuntos(int puntosGanados){
         this.puntos += puntosGanados;
