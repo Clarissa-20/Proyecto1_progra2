@@ -17,7 +17,6 @@ public class Muerte extends PiezaPrincipal{
     
     @Override
     public boolean esMovimientoValido(int destFila, int destColunma){
-        //la muerte se mueve como una pieza principal (adyacente)
         return esMovimientoAdyacente(destFila, destColunma);
     }
     
@@ -28,8 +27,7 @@ public class Muerte extends PiezaPrincipal{
     }
     
     //metodo especila: ataque de lanza a 2 casilla
-    //usar una funcion recursiva para revisar obstrucciones
     public int ataqueLanza(int destFila, int destColumna){
-        return this.ataque*2; //el ataque de lanza es doble
+        return this.ataque*2;
     }
 }

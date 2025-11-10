@@ -27,28 +27,18 @@ public abstract class Pieza {
         this.color = color;
         this.tipo = tipo;
     }
-
-    /*metodos abstractos - polimorfismo
-    por lo menos una funcion abstracta
-    define el comportamiento de movimiento unico de cada pieza
-    sera implementado por Vampiro, HombreLobo y Muerte*/
+    
     public abstract boolean esMovimientoValido(int destFila, int destColumna);
 
-    /*metodo final
-    logica inmutable de como la pieza recibe daño
-    primero se absorbe el daño con el escudo luego afecta las vidas*/
     public final void recibirDanio(int danio, boolean ignorarEscudo) {
         if (ignorarEscudo) {
             this.vidas -= danio;
         } else {
-            //logica de absorcion
             int danioResidual = danio - this.escudo;
             if (danioResidual > 0) {
-                //si el daño supera el escudo, queda en 0 y pasa a las vidas
                 this.escudo = 0;
                 this.vidas -= danioResidual;
             } else {
-                //si el daño es menor o igual al escudo, solo le reduce el escudo
                 this.escudo -= danio;
             }
         }
@@ -60,10 +50,6 @@ public abstract class Pieza {
 
     public void resturarVida(int cantidad) {
         this.vidas += cantidad;
-
-        /*if(this.vidas > this.vidasMax){
-            this.vidas = this.vidasMax
-;        }*/
     }
 
     public void setPosicion(int fila, int columna) {

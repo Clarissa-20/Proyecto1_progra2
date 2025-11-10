@@ -20,7 +20,6 @@ public class Reportes extends JFrame{
         setSize(800, 550);
         setLocationRelativeTo(null);
         
-        //JTabbedPane para tener dos pestañas: ranking y logs
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
         tabbedPane.setForeground(Color.BLACK);
@@ -44,13 +43,11 @@ public class Reportes extends JFrame{
         
         ArrayList<Player> ranking = sistema.obtenerRanking();
         StringBuilder sb = new StringBuilder();
-        //sb.append(String.format("%-10s | %-15s | %s\n", "POSICION", "USUARIO", "PUNTOS"));
         sb.append("   POSICION   |   USUARIO   |   PUNTOS\n");
         sb.append("----------------------------------------------------\n");
         
         int posicion = 1;
         for(Player p : ranking){
-            //sb.append(String.format("%-10d | %-15s | %d\n", posicion++, p.getUsername(), p.getPuntos()));
             sb.append(String.format(" %-8d | %-10s | %d\n", posicion++, p.getUsername(), p.getPuntos()));
         }
         rankingArea.setText(sb.toString());

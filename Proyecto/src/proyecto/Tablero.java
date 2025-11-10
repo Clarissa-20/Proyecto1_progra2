@@ -11,13 +11,10 @@ import javax.swing.JOptionPane;
 
 public class Tablero {
 
-    /*el tablero contiene objetos
-    una casilla vacia se representa como null*/
     private static final int tamaño = 6;
     private Pieza[][] matriz;
     private Random random;
 
-    //constante para los puntos de victoria
     public static final int puntosVictoria = 3;
 
     private List<Pieza> capturadasNegro;

@@ -77,32 +77,9 @@ public class MenuPrincipal extends JFrame{
     }
     
     private void iniciarJuego(){
-        JOptionPane.showMessageDialog(this, "Iniciando juego. Necesitas seleccionar 2 jugadores", "Inicia Juego", JOptionPane.INFORMATION_MESSAGE);
-        /*pendiente: aqui se debe de abrir la VentanaJuego pasandole dos objetos Plyer(el logeado y el rival seleccionado
-        new VentanaJuego(sistema, jugadorActual, rival).setVisible(true);*/
-        
-        //selec el rival
-        Player rival = null;
-        ArrayList<Player> jugadores = sistema.obtenerRanking(); //ontener lista de jugadores activos
-        
-        for(Player p : jugadores){
-            if(!p.getUsername().equals(jugadorActual.getUsername())){
-                rival = p;
-                break;
-            }
-        }
-        
-        if(rival == null){
-            JOptionPane.showMessageDialog(this, "No hay suficientes jugadores activos para iniciar la partida", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        //abrir la vtn del juego
-        //p1 negro, p2 blanco
-        vtnJuego juego = new vtnJuego(sistema, jugadorActual, rival);
-        juego.setVisible(true);
-        
         this.dispose();
+        selecRival sr = new selecRival(this, sistema, jugadorActual);
+        sr.setVisible(true);
     }
     
     private void manejarLogOut(){

@@ -22,15 +22,13 @@ public class HombreLobo extends PiezaPrincipal {
         int difColumna = Math.abs(destColumna - this.columna);
         
         if(movimientoDobleActivo){
-            //puede moverse dos casillas en cualquier direccion
             return (difFila <=2 && difColumna <= 2) && (difFila != 0 || difColumna != 0);
         } else{
-            //movimiento adyacente normal
             return esMovimientoAdyacente(destFila, destColumna);
         }
     }
     
-    //metodo especial: activar o desactivar el movimiento doble
+    //metodo especial: que se puede mover hasta d2 casillas
     public void alternarMovimientoDble(){
         this.movimientoDobleActivo = !this.movimientoDobleActivo;
         JOptionPane.showMessageDialog(null, "Movimiento doble de Hombre Lobo: "+(movimientoDobleActivo ? "ACTIVO" : "INACTIVO"));

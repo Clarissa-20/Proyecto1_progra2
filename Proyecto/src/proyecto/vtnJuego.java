@@ -21,8 +21,8 @@ public class vtnJuego extends JFrame {
     private int origenFila = -1, origenColumna = -1;
     private boolean piezaSelec = false;
 
-    private Player jugador1; //negro
-    private Player jugador2; //blanco
+    private Player jugador1;
+    private Player jugador2; 
     private String turnoActual; // negro o blanco
 
     private JLabel turnoInfo;
@@ -85,6 +85,7 @@ public class vtnJuego extends JFrame {
         ruleta, info de turno, btn de retirar*/
         //inicializar el tablero con las imgs de las piezas
         actualizarTableroVisual();
+        actualizarInfoJugador();
     }
 
     private JPanel panelJugadoresInfo(){
@@ -111,14 +112,14 @@ public class vtnJuego extends JFrame {
         cementerioNegro = new fondoPanel("/img/cementerio.jpeg");
         cementerioNegro.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
         cementerioNegro.setOpaque(false);
-        Border bn = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Capturas de: "+jugador1.getUsername(), 
+        Border bn = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Cementerio de: "+jugador1.getUsername(), 
                 TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.BLACK);
         cementerioNegro.setBorder(bn);
         
         cementerioBlanco = new fondoPanel("/img/cementerio.jpeg");
         cementerioBlanco.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
         cementerioBlanco.setOpaque(false);
-        Border bb = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Capturas de: "+jugador2.getUsername(), 
+        Border bb = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Cementerio de: "+jugador2.getUsername(), 
                 TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.BLACK);
         cementerioBlanco.setBorder(bb);
         
@@ -129,7 +130,7 @@ public class vtnJuego extends JFrame {
     }
     
     private void actualizarInfoJugador(){
-        String nombreJugador = turnoActual.equals("Negro") ? jugador1.getUsername() : jugador2.getUsername();
+        String nombreJugador = turnoActual.equals("Blanco") ? jugador1.getUsername() : jugador2.getUsername();
         jugadorActual.setText("Turno: "+nombreJugador+" - "+turnoActual);
         jugadorActual.setFont(new Font("Bodoni Bd BT", Font.BOLD, 30));
         jugadorActual.setForeground(Color.WHITE);
@@ -456,7 +457,7 @@ public class vtnJuego extends JFrame {
     }
 
     private void cambiarTurno() {
-        turnoActual = turnoActual.equals("Negro") ? "Blanco" : "Negro";
+        turnoActual = turnoActual.equals("Blanco") ? "Negro" : "Blanco";
         btnRuleta.setEnabled(true);
         
         final int tamañoRuleta = 280;
@@ -470,7 +471,7 @@ public class vtnJuego extends JFrame {
     }
 
     private String getOponenteColor() {
-        return turnoActual.equals("Negro") ? "Blanco" : "Negro";
+        return turnoActual.equals("Blanco") ? "Negro" : "Blanco";
     }
 
     private void manejarRetirarse() {
@@ -481,7 +482,7 @@ public class vtnJuego extends JFrame {
         if (confirmar == JOptionPane.YES_OPTION) {
             //el jugador actual se retira y es le perdedor
             Player perdedor = turnoActual.equals("Negro") ? jugador1 : jugador2;
-            Player ganador = turnoActual.equals("Negro") ? jugador2 : jugador1;
+            Player ganador = turnoActual.equals("Blanco") ? jugador2 : jugador1;
 
             //dar los puntos y guardar el log
             ganador.agregarPuntos(Tablero.puntosVictoria);

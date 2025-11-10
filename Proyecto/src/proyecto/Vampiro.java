@@ -17,8 +17,6 @@ public class Vampiro extends PiezaPrincipal {
 
     @Override
     public boolean esMovimientoValido(int destFila, int destColumna) {
-        /*el vampiro se mueve en cualquier direccion (horizontal, vertical o diagonal)
-        hacia una casilla vacia adyacente(es el movimiento base)*/
         return esMovimientoAdyacente(destFila, destColumna);
     }
     

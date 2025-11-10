@@ -15,13 +15,11 @@ public class Zombie extends Pieza {
 
     @Override
     public boolean esMovimientoValido(int destFila, int destColumna) {
-        //no se mueve, por lo tanto el movimiento es siempre invalido
         return false;
     }
     
     //el zombie ataca por orden de la muerte
     public int ataquePorOrden(Pieza rival){
-        //implementar la logica del ataque del zombie
         return this.ataque;
     }
 }
