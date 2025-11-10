@@ -26,14 +26,12 @@ public class MenuPrincipal extends JFrame{
         fondoPanel fp = new fondoPanel("/img/fondoMenuPrincipal.png");
         fp.setLayout(new BorderLayout(20, 20));
         
-        //añadir componentes a la vtn
         JLabel titulo = new JLabel("¡Bienvenido, " + jugador.getUsername()+"!", SwingConstants.CENTER);
         titulo.setFont(new Font("Bodoni Bd BT", Font.BOLD, 30));
         titulo.setForeground(Color.WHITE);
         titulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 10, 0));
         fp.add(titulo, BorderLayout.NORTH);
         
-        //panel central de btns
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(4, 1, 20, 20)); //4 f, 1 c
         panelBotones.setBorder(BorderFactory.createEmptyBorder(20, 200, 60, 200));
@@ -53,7 +51,6 @@ public class MenuPrincipal extends JFrame{
         
         this.add(fp);
 
-        //manejo de eventos
         btnJugar.addActionListener(e -> iniciarJuego());
         btnMiCuenta.addActionListener(e -> new MiCuenta(sistema, jugadorActual).setVisible(true));
         btnReportes.addActionListener(e -> new Reportes(sistema, jugadorActual).setVisible(true));
@@ -77,13 +74,21 @@ public class MenuPrincipal extends JFrame{
     }
     
     private void iniciarJuego(){
-        this.dispose();
-        selecRival sr = new selecRival(this, sistema, jugadorActual);
-        sr.setVisible(true);
+        ArrayList<Player> jugadoresRegistrados = sistema.obtenerJugadores(); 
+        
+        if (jugadoresRegistrados != null && jugadoresRegistrados.size() >= 2) {
+            this.dispose();
+            selecRival sr = new selecRival(this, sistema, jugadorActual);
+            sr.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Se necesita dos jugadores para iniciar partida", 
+                "Error de Inicio", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     private void manejarLogOut(){
-        //volver al menu inicio
         new MenuInicio(sistema).setVisible(true);
         this.dispose();
     }

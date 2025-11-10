@@ -119,11 +119,9 @@ public class Tablero {
             return false;
         }
 
-        //logica de distancia incluyendo al HL
         double distancia = calcularDistancia(origenFila, origenColumna, destFila, destColumna);
         int maxDistancia = 1;
 
-        //HL puede moverse hasta 2 casillas vacias
         if (piezaOrigen.getTipo().equals("HombreLobo")) {
             maxDistancia = 2;
         }
@@ -132,19 +130,16 @@ public class Tablero {
             return false;
         }
 
-        //validar la direccion, todos se mueven horizontal, vertical o diagonal
         if (!movimientoValido(origenFila, origenColumna, destFila, destColumna)) {
             return false;
         }
 
-        //maver la pieza a la casilla vacia
         matriz[destFila][destColumna] = piezaOrigen;
         matriz[origenFila][origenColumna] = null;
         piezaOrigen.setPosicion(destFila, destColumna);
         return true;
     }
 
-    //contar el numero de piezas vicas que le quedan al jugador
     public int contarPiezasVivas(String color) {
         int contador = 0;
         for (int i = 0; i < tamaño; i++) {
@@ -210,7 +205,6 @@ public class Tablero {
         return contarPiezasPorTipo(color, tipo, nuevaFila, nuevaColumna, contador);
     }
 
-    //revisar si la casilla de destino esta vacia para conjurar el zombie
     public boolean ConjurarZombie(int fMuerte, int cMuerte, int destFila, int destColumna) {
         if (matriz[destFila][destColumna] == null) {
             String colorZombie = matriz[fMuerte][cMuerte].getColor();
@@ -222,7 +216,6 @@ public class Tablero {
         return false;
     }
 
-    //manejar los ataque especiales
     public String ejecutarAtaque(int origenFila, int origenColumna, int destFila, int destColumna, String tipoAtaque) {
         Pieza atacante = matriz[origenFila][origenColumna];
         Pieza defensor = matriz[destFila][destColumna];
@@ -234,7 +227,6 @@ public class Tablero {
         int danioCausado = 0;
         boolean ignorarEscudo = false;
 
-        //logica para el daño por cada tipo
         switch (tipoAtaque) {
             case "Normal":
                 danioCausado = atacante.getAtaque();

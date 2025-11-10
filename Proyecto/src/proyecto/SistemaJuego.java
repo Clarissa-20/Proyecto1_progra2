@@ -7,12 +7,11 @@ package proyecto;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author HP
- */
+
 public class SistemaJuego implements GestionDatos {
 
     private ArrayList<Player> jugadores;
@@ -31,7 +30,29 @@ public class SistemaJuego implements GestionDatos {
         }
         return null;
     }
+    
+    private void validarPasswordEstructura(String password) throws PasswordException {
+        final String PASSWORD_PATTERN = 
+                "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{5,}$";
+        
+        Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matcher = pattern.matcher(password);
 
+        if (password == null || password.trim().isEmpty()) {
+            throw new PasswordException("La contraseña no puede estar vacía.");
+        }
+        
+        if (!matcher.matches()) {
+            throw new PasswordException(
+                "La contraseña debe cumplir con los siguientes requisitos (mínimo 5 caracteres):\n" +
+                "- Al menos una mayúscula (A-Z).\n" +
+                "- Al menos una minúscula (a-z).\n" +
+                "- Al menos un número (0-9).\n" +
+                "- Al menos un caracter especial (!@#$%^&+=).\n" +
+                "- No debe contener espacios."
+            );
+        }
+    }
     @Override
     public boolean crearPlayer(String username, String password) {
         if (buscarPlayer(username) != null) {
@@ -39,16 +60,20 @@ public class SistemaJuego implements GestionDatos {
             return false;
         }
 
-        if (password == null || password.length() != 5) {
-            return false;
-        }
-
         try {
+            validarPasswordEstructura(password);
+            
+            
             Player nuevoPlayer = new Player(username, password);
             jugadores.add(nuevoPlayer);
-            System.out.println("Jugador " + username + " creado con exito");
+            JOptionPane.showMessageDialog(null, "Jugador " + username + " creado con éxito.");
             return true;
+            
+        } catch (PasswordException e) {
+            JOptionPane.showMessageDialog(null, "Error de Contraseña:\n" + e.getMessage());
+            return false;
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al crear jugador: " + e.getMessage());
             return false;
         }
     }
@@ -62,7 +87,6 @@ public class SistemaJuego implements GestionDatos {
         }
 
         if (p.getPassword().equals(password)) {
-            System.out.println("Log In exitoso para: " + username);
             return p;
         } else {
             return null;
@@ -84,15 +108,22 @@ public class SistemaJuego implements GestionDatos {
                 JOptionPane.showMessageDialog(null, "ERROR: Contraseña actual incorrecta");
                 return false;
             }
-
-            if (nuevaPassword == null || nuevaPassword.length() != 5) {
-                JOptionPane.showMessageDialog(null, "ERROR: La contraseña debe ser de 5 caracteres");
-                return false;
+            validarPasswordEstructura(nuevaPassword);
+            
+            if (nuevaPassword.equals(viejaPassword)) {
+                 JOptionPane.showMessageDialog(null, "ERROR: La nueva contraseña debe ser diferente a la anterior.");
+                 return false;
             }
+            
+
 
             p.setPassword(nuevaPassword);
             JOptionPane.showMessageDialog(null, "Contraseña de " + username + " cambiada con exito");
             return true;
+            
+        } catch (PasswordException e) {
+             JOptionPane.showMessageDialog(null, "Error de Contraseña (Cambio):\n" + e.getMessage());
+             return false;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al cambiar contraseña: " + e.getMessage());
         }
@@ -101,7 +132,7 @@ public class SistemaJuego implements GestionDatos {
 
     @Override
     public boolean eliminarCuenta(String username, String password) {
-       
+        
         try {
             Player p = buscarPlayer(username);
 
@@ -116,7 +147,7 @@ public class SistemaJuego implements GestionDatos {
             }
 
             p.setActivo(false);
-            System.out.println("Cuenta de " + username + " eliminada con exito");
+            JOptionPane.showMessageDialog(null, "Cuenta de " + username + " desactivada.");
             return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al intentar eliminar la cuenta: " + e.getMessage());
@@ -124,11 +155,10 @@ public class SistemaJuego implements GestionDatos {
         return false;
     }
 
-    //menu principal(reportes)
     @Override
     public void guardarLog(GameLog log) {
         if (log != null) {
-            logs.add(log);
+            logs.add(log);  
             JOptionPane.showMessageDialog(null, "Log del juego guardado");
         }
     }
@@ -171,6 +201,10 @@ public class SistemaJuego implements GestionDatos {
         });
         return logsUsuario;
     }
+    
+    public ArrayList<Player> obtenerJugadores() {
+        return jugadores; 
+    }
 
     public String[] obtenerNombresOponentes(String nombrePrincipal) {
         ArrayList<String> nombres = new ArrayList<>();
@@ -187,4 +221,14 @@ public class SistemaJuego implements GestionDatos {
         }
         return nombres.toArray(new String[0]);
     }
+    
+    public void actualizarJugador(Player jugadorActualizado) {
+    for (int i = 0; i < jugadores.size(); i++) {
+        Player p = jugadores.get(i);
+        if (p.getUsername().equalsIgnoreCase(jugadorActualizado.getUsername())) {
+            jugadores.set(i, jugadorActualizado);
+            return;
+        }
+    }
+}
 }

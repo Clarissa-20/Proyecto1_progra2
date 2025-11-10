@@ -47,14 +47,17 @@ public class MiCuenta extends JFrame{
         JButton btnVerInfo = crearBoton("VER MI INFORMACION");
         JButton btnCambiarContra = crearBoton("CAMBIAR PASSWORD");
         JButton btnCerrarCuenta = crearBoton("CERRAR MI CUENTA");
+        JButton btnVolver = crearBoton("VOLVER");
         
         panelBotones.add(btnVerInfo);
         panelBotones.add(btnCambiarContra);
         panelBotones.add(btnCerrarCuenta);
+        panelBotones.add(btnVolver);
         
         btnVerInfo.addActionListener(e -> vtnInfo());
         btnCambiarContra.addActionListener(e -> vtnCambioContra());
         btnCerrarCuenta.addActionListener(e -> vtnCerrarCuenta());
+        btnVolver.addActionListener(e -> vtnVolver());
         
         fp.add(titulo, BorderLayout.NORTH);
         fp.add(panelBotones, BorderLayout.CENTER);
@@ -101,5 +104,10 @@ public class MiCuenta extends JFrame{
         cerrarCuenta cerrar = new cerrarCuenta(miSistema, jugadorActual);
         cerrar.setVisible(true);
         this.dispose();
+    }
+    
+    private void vtnVolver(){
+        new MenuPrincipal(miSistema, jugadorActual).setVisible(true);
+        this.dispose(); 
     }
 }

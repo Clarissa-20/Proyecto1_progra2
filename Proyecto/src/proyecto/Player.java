@@ -12,7 +12,7 @@ public class Player {
     private int puntos;
     private LocalDate fechaIngreso;
     private boolean activo;
-    
+        
     public Player(String username, String password){
         this.username = username;
         this.password = password;

@@ -92,7 +92,6 @@ public class vtnCrearPlayer extends JFrame{
         boolean exito = sistema.crearPlayer(user, contra);
         
         if (exito) {
-            JOptionPane.showMessageDialog(this, "Cuenta creada con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
             Player nuevoPlayer = sistema.logIn(user, contra);
             if (nuevoPlayer != null) {
                 MenuPrincipal menuPrincipal = new MenuPrincipal(sistema, nuevoPlayer);
@@ -101,7 +100,6 @@ public class vtnCrearPlayer extends JFrame{
             }
             
         } else {
-            JOptionPane.showMessageDialog(this, "Error al crear cuenta. Verifica que el usuario no exista.", "Error de registro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

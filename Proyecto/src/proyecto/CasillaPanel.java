@@ -38,7 +38,6 @@ public class CasillaPanel extends JPanel{
         });
     }
     
-    //metodo para la asignacion de la img basada en la pieza
     public void PiezaVisual(Pieza pieza){
         if(pieza == null){
             imgPieza.setIcon(null);

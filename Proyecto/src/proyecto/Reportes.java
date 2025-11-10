@@ -27,6 +27,7 @@ public class Reportes extends JFrame{
         tabbedPane.addTab("Ranking de Jugadores", crearPanelRanking());
         tabbedPane.addTab("Logs de Mis Ultimos Juegos", crearPanelLogs());
         add(tabbedPane);
+        repaint();
     }
     
     private JScrollPane crearPanelRanking(){

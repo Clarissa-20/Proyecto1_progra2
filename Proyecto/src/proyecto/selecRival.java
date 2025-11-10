@@ -63,7 +63,6 @@ public class selecRival extends JFrame {
 
         JPanel abajo = new JPanel();
         
-        // Botón de Aceptar
         JButton btnAceptar = new JButton("Comenzar Partida");
         btnAceptar.setFont(new Font("Bodoni Bd BT", Font.BOLD, 25));
         btnAceptar.setBackground(Color.BLACK);

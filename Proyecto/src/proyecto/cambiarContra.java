@@ -54,9 +54,27 @@ public class cambiarContra extends JFrame {
         panel.add(btnCambiarContra);
 
         btnCambiarContra.addActionListener(e -> manejarCambioContra());
+        
+        JButton btnVolver = new JButton("VOLVER");
+        btnVolver.setFont(FONT_LABEL);
+        btnVolver.setForeground(COLOR_TEXTO);
+        btnVolver.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        btnVolver.setBackground(new Color(153, 0, 0));
+        btnVolver.setPreferredSize(new Dimension(250, 50));
+        btnVolver.addActionListener(e -> vtnVolver());
+        
+        JPanel panelbtn = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        panelbtn.setOpaque(false);
+        panelbtn.add(btnVolver);
+        fondo.add(panelbtn, BorderLayout.SOUTH);
 
         fondo.add(panel, BorderLayout.CENTER);
         this.setContentPane(fondo);
+    }
+    
+    private void vtnVolver(){
+        new MiCuenta(sistema, jugadorActual).setVisible(true);
+        this.dispose(); 
     }
     
     private JLabel crearLabel(String text) {

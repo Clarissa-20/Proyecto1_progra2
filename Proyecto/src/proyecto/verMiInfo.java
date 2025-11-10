@@ -19,6 +19,8 @@ public class verMiInfo extends JFrame {
     public verMiInfo(Player jugadorActual) {
         super("Información de la Cuenta - " + jugadorActual.getUsername());
 
+        this.jugadorActual = jugadorActual;
+        
         setSize(800, 550);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -28,7 +30,7 @@ public class verMiInfo extends JFrame {
         fondo.setLayout(new BorderLayout());
         fondo.setBorder(BorderFactory.createEmptyBorder(90, 90, 90, 90));
 
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 10));
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEmptyBorder(90, 90, 90, 90));
         panel.setBorder(BorderFactory.createTitledBorder(
@@ -63,15 +65,47 @@ public class verMiInfo extends JFrame {
         txtRegistro.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
         txtRegistro.setForeground(Color.WHITE);
         registro.setPreferredSize(new Dimension(100, 30));
+        
+        JLabel estado = new JLabel("ESTADO DE CUENTA:");
+        estado.setFont(FONT_LABEL);
+        estado.setForeground(COLOR_TEXTO);
+        
+        String estadoTexto = jugadorActual.isActivo() ? "ACTIVO" : "INACTIVO";
+        Color color = jugadorActual.isActivo() ? Color.GREEN : Color.RED;
 
+        JLabel txtEstado = new JLabel(estadoTexto);
+        txtEstado.setFont(FONT_LABEL);
+        txtEstado.setForeground(color);
+        txtEstado.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        
+        JButton btnVolver = new JButton("VOLVER");
+        btnVolver.setFont(FONT_LABEL);
+        btnVolver.setForeground(COLOR_TEXTO);
+        btnVolver.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        btnVolver.setBackground(new Color(153, 0, 0));
+        btnVolver.setPreferredSize(new Dimension(250, 50));
+        btnVolver.addActionListener(e -> vtnVolver());
+        
+        JPanel panelbtn = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
+        panelbtn.setOpaque(false);
+        panelbtn.add(btnVolver);
+        fondo.add(panelbtn, BorderLayout.SOUTH);
+        
         panel.add(nombre);
         panel.add(txtUsername);
         panel.add(puntos);
         panel.add(txtPuntos);
         panel.add(registro);
         panel.add(txtRegistro);
+        panel.add(estado);
+        panel.add(txtEstado);
 
         fondo.add(panel, BorderLayout.CENTER);
         this.setContentPane(fondo);
+    }
+    
+    private void vtnVolver(){
+        new MiCuenta(miSistema, jugadorActual).setVisible(true);
+        this.dispose(); 
     }
 }

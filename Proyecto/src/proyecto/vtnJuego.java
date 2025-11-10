@@ -354,12 +354,12 @@ public class vtnJuego extends JFrame {
 
             if (this.accionEspecial != null && this.accionEspecial.equals("conjurarZombie")) {
                 //verifica que este vacio y sea adyacente
-                if (defensor == null && tablero.calcularDistancia(origenFila, origenColumna, fila, columna) == 1) {
+                if (defensor == null) {
                     tablero.ConjurarZombie(origenFila, origenColumna, fila, columna);
                     mensaje = "¡Zombie conjurado!";
                     exito = true;
                 } else {
-                    mensaje = "Solo puedes conjurar un Zombie en una casilla vacia adyacente";
+                    mensaje = "Solo puedes conjurar un Zombie en una casilla vacia";
                 }
                 this.accionEspecial = null; 
             } else if (defensor == null) {
@@ -460,18 +460,17 @@ public class vtnJuego extends JFrame {
         if (confirmar == JOptionPane.YES_OPTION) {
             //el jugador actual se retira y es le perdedor
             Player perdedor = turnoActual.equals("Blanco") ? jugador1 : jugador2;
-            Player ganador = turnoActual.equals("Blanco") ? jugador2 : jugador1;
+            Player ganador = turnoActual.equals("Negro") ? jugador1 : jugador2;
             
             //dar los puntos y guardar el log
             ganador.agregarPuntos(Tablero.puntosVictoria);
+            sistema.actualizarJugador(ganador);
             GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR RETIRO", Tablero.puntosVictoria);
             sistema.guardarLog(log);
 
             JOptionPane.showMessageDialog(this,
                     "¡" + perdedor.getUsername() + " se ha retirado! ¡Felicidades jugador " + ganador.getUsername() + ", has ganados 3 puntos!", "VICTORIA POR RETIRO", JOptionPane.INFORMATION_MESSAGE);
-            System.out.println("RETIRO: jugador " + perdedor.getUsername() + " se ha retirado de la partida. Jugador " + ganador.getUsername() + " has ganado");
-
-            new MenuPrincipal(sistema, ganador).setVisible(true);
+            new MenuPrincipal(sistema, this.jugador1).setVisible(true);
             this.dispose();
         }
     }
@@ -482,13 +481,13 @@ public class vtnJuego extends JFrame {
 
         //dar puntos al ganador
         ganador.agregarPuntos(Tablero.puntosVictoria);
+        sistema.actualizarJugador(ganador);
 
         //guardar log
         GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR DESTRUCCION TOTAL DE PIEZAS", Tablero.puntosVictoria);
         sistema.guardarLog(log);
 
         JOptionPane.showMessageDialog(this, "¡Juego Terminado! El jugador " + ganador.getUsername() + " vencio al jugador " + perdedor.getUsername() + ". Has ganado 3 puntos", "VICTORIA", JOptionPane.INFORMATION_MESSAGE);
-        System.out.println("FIN JUEGO: jugador " + ganador.getUsername() + " has ganado la partida. Perdedor: " + perdedor.getUsername());
         new MenuPrincipal(sistema, ganador).setVisible(true);
         this.dispose();
     }
