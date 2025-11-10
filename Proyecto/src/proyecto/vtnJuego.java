@@ -108,21 +108,19 @@ public class vtnJuego extends JFrame {
         panelPrincipal.setPreferredSize(new Dimension(300, 0));
         panelPrincipal.setBorder(BorderFactory.createLineBorder(Color.BLACK,5));
         
-        cementerioNegro = new fondoPanel("/img/pergamino.jpeg");
+        cementerioNegro = new fondoPanel("/img/cementerio.jpeg");
         cementerioNegro.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
         cementerioNegro.setOpaque(false);
-        Border bn = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "Capturas de: "+jugador1.getUsername(), 
-                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.WHITE);
+        Border bn = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Capturas de: "+jugador1.getUsername(), 
+                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.BLACK);
         cementerioNegro.setBorder(bn);
-        //cementerioNegro.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador1.getUsername()));
         
-        cementerioBlanco = new fondoPanel("/img/pergamino.jpeg");
+        cementerioBlanco = new fondoPanel("/img/cementerio.jpeg");
         cementerioBlanco.setLayout(new FlowLayout(FlowLayout.LEFT, 2, 2));
         cementerioBlanco.setOpaque(false);
-        Border bb = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.DARK_GRAY), "Capturas de: "+jugador1.getUsername(), 
-                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.WHITE);
+        Border bb = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK), "Capturas de: "+jugador2.getUsername(), 
+                TitledBorder.LEFT, TitledBorder.TOP, new Font("Bodoni Bd BT", Font.BOLD, 25), Color.BLACK);
         cementerioBlanco.setBorder(bb);
-        //cementerioBlanco.setBorder(BorderFactory.createTitledBorder("Capturas de: "+jugador2.getUsername()));
         
         panelPrincipal.add(cementerioNegro);
         panelPrincipal.add(cementerioBlanco);
@@ -180,11 +178,12 @@ public class vtnJuego extends JFrame {
         panelControl.setPreferredSize(new Dimension(300, 0));
         
         JLabel control = new JLabel("CONTROL JUEGO");
+        control.setBackground(Color.BLACK);
         control.setFont(new Font("Bodoni Bd BT", Font.BOLD, 30));
         control.setForeground(Color.WHITE);
-        control.setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+        control.setOpaque(true);
+        control.setBorder(BorderFactory.createLineBorder(Color.WHITE,5));
         control.setAlignmentX(Component.CENTER_ALIGNMENT);
-        //control.setOpaque(false);
         panelControl.add(control);
 
         final int tamañoRuleta = 280;
@@ -197,7 +196,7 @@ public class vtnJuego extends JFrame {
         panelRuleta.setPreferredSize(new Dimension(tamañoRuleta, tamañoRuleta));
 
         imgRuleta = getScaledLabel("/img/ruleta.png", tamañoRuleta, tamañoRuleta);
-        ImageIcon gifIcon = new ImageIcon(getClass().getResource("/img/gifRuleta.gif"));
+        ImageIcon gifIcon = new ImageIcon(getClass().getResource("/img/ruletaGirando.gif"));
         Image gifImg = gifIcon.getImage();
         Image scaledGif = gifImg.getScaledInstance(tamañoRuleta, tamañoRuleta, Image.SCALE_DEFAULT);
         ruletaGif = new JLabel(new ImageIcon(scaledGif));
@@ -221,7 +220,7 @@ public class vtnJuego extends JFrame {
         panelControl.add(btnRuleta);
         panelControl.add(Box.createVerticalStrut(60));
 
-        piezaSeleccionada = new JLabel("Pieza a Mover: Ninguna", SwingConstants.CENTER);
+        piezaSeleccionada = new JLabel("Pieza a mover: Ninguna", SwingConstants.CENTER);
         piezaSeleccionada.setAlignmentX(Component.CENTER_ALIGNMENT);
         piezaSeleccionada.setForeground(Color.BLACK);
         piezaSeleccionada.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
@@ -254,7 +253,7 @@ public class vtnJuego extends JFrame {
 
         if (girosRestantes > 0) {
             btnRuleta.setEnabled(false);
-            piezaSeleccionada.setText("Girando...");
+            piezaSeleccionada.setText("GIRANDO...");
 
             ((CardLayout) panelRuleta.getLayout()).show(panelRuleta, "GIRANDO");
 
@@ -272,7 +271,7 @@ public class vtnJuego extends JFrame {
                     imgRuleta.setIcon(new ImageIcon(scaledImage));
                     ((CardLayout) panelRuleta.getLayout()).show(panelRuleta, "ESTATICA");
 
-                    piezaSeleccionada.setText("¡Mueve: " + piezaPermitida + "!");
+                    piezaSeleccionada.setText("¡MUEVE: " + piezaPermitida.toUpperCase() + "!");
                     JOptionPane.showMessageDialog(this, "La ruleta permite mover: " + piezaPermitida, "Turno Asignado", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     girosRestantes--;
@@ -352,7 +351,7 @@ public class vtnJuego extends JFrame {
                 origenColumna = columna;
                 piezaSelec = true;
                 tableroVisual[fila][columna].resaltar(Color.GREEN);
-                JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaClickeada.getTipo() + ". Selecciona la casilla destino");
+                //JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaClickeada.getTipo() + ". Selecciona la casilla destino");
             } else {
                 //error de selecion
                 JOptionPane.showMessageDialog(this, "Selecciona una pieza valida de tu color y seleccionada por la ruleta (" + piezaPermitida + ")", "Error", JOptionPane.ERROR_MESSAGE);
@@ -383,7 +382,7 @@ public class vtnJuego extends JFrame {
                 //movimiento simple - destino vacio
                 exito = tablero.ejecutarMovimiento(origenFila, origenColumna, fila, columna);
                 if (exito) {
-                    mensaje = "Movimiento exitoso";
+                    //mensaje = "Movimiento exitoso";
                 } else {
                     mensaje = "Movimiento invalido, distancia o direccion incorrecta";
                 }

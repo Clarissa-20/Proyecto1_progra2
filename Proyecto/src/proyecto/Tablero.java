@@ -260,6 +260,8 @@ public class Tablero {
         Pieza atacante = matriz[origenFila][origenColumna];
         Pieza defensor = matriz[destFila][destColumna];
 
+        tipoAtaque = tipoAtaque.toLowerCase();
+        
         if (defensor == null || atacante.getColor().equals(defensor.getColor())) {
             return "Objetivo de ataque invalido";
         }

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 public class CasillaPanel extends JPanel{
     private int fila;
@@ -24,7 +25,7 @@ public class CasillaPanel extends JPanel{
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
         //asignar el color de fondo para simular el tablero
-        Color colorCasilla = (fila+columna) % 2 == 0 ? new Color(240, 217, 181) : new Color(181, 136, 99);
+        Color colorCasilla = (fila+columna) % 2 == 0 ? new Color(230, 230, 230) : new Color(35, 35, 35);
         setBackground(colorCasilla);
         
         imgPieza = new JLabel("", SwingConstants.CENTER);
@@ -51,8 +52,25 @@ public class CasillaPanel extends JPanel{
                 String rutaImg = "/img/"+tipo+color+".png";
                 ImageIcon icon = new ImageIcon(getClass().getResource(rutaImg));
                 
+                Image imgOriginal = icon.getImage();
+                int ancho = 120;
+                int alto = 120;
+                
+                BufferedImage scaledImage = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
+                
+                Graphics2D g2d = scaledImage.createGraphics();
+                
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+                g2d.drawImage(imgOriginal, 0, 0, ancho, alto, null);
+                g2d.dispose();
+                
+                imgPieza.setIcon(new ImageIcon(scaledImage));
+                
                 //redimensionar si es necesario
-                Image img = icon.getImage().getScaledInstance(130, 130, Image.SCALE_SMOOTH);
+                Image img = icon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
                 imgPieza.setIcon(new ImageIcon(img));
             } catch(Exception e){
                 System.err.println("Error cargando la imagen para "+pieza.getTipo()+": "+e.getMessage());
