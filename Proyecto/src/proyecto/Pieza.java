@@ -11,13 +11,11 @@ public abstract class Pieza {
     protected int ataque;
     protected int vidas;
     protected int escudo;
-    protected String color; //blanco o negro
+    protected String color;
 
-    //posicion actual en el tablero
     protected int fila;
     protected int columna;
 
-    //identificador para el tipo de pieza
     protected String tipo;
 
     public Pieza(int ataque, int vidas, int escudo, String color, String tipo) {

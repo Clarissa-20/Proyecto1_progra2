@@ -4,7 +4,7 @@
  */
 package proyecto;
 
-public class Zombie extends Pieza {
+public final class Zombie extends Pieza {
     private static final int ATAQUE_INICIAL = 1;
     private static final int VIDAS_INICIALES = 1;
     private static final int ESCUDO_INICIAL = 0;

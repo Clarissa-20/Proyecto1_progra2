@@ -16,7 +16,6 @@ public class vtnLogin extends JFrame{
         setSize(800, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        //setResizable(false);
         
         setLayout(new BorderLayout(20, 20));
         

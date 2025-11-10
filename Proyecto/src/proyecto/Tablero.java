@@ -40,10 +40,9 @@ public class Tablero {
         if (fila >= 0 && fila < tamaño && columna >= 0 && columna < tamaño) {
             return matriz[fila][columna];
         }
-        return null; //returno null si esta fuera de limites
+        return null; 
     }
 
-    //colocar las piezas en sus posociones iniciales
     private void inicializarTablero() {
         //jugador conpiezas negras
         matriz[0][0] = new HombreLobo("Negro");
@@ -53,7 +52,6 @@ public class Tablero {
         matriz[0][4] = new Vampiro("Negro");
         matriz[0][5] = new HombreLobo("Negro");
 
-        //se establece la posicion para cada jugador
         for (int c = 0; c < tamaño; c++) {
             if (matriz[0][c] != null) {
                 matriz[0][c].setPosicion(0, c);
@@ -74,14 +72,9 @@ public class Tablero {
             }
         }
     }
-
-    //logica del turno
-    //Pieza - String
     public String seleccionarPiezaAlAzar(String colorTurno) {
-        //ArrayList<Pieza> piezasDisponibles = new ArrayList<>();
         ArrayList<String> piezasDisponibles = new ArrayList<>();
 
-        //recorrer el tablero para encontrar todas las piezas del colorTurno
         for (int i = 0; i < tamaño; i++) {
             for (int j = 0; j < tamaño; j++) {
                 Pieza p = matriz[i][j];
@@ -94,15 +87,12 @@ public class Tablero {
             }
         }
         if (piezasDisponibles.isEmpty()) {
-            return null; //el jugador no tiene piezas
+            return null;
         }
 
-        //seleccionar una pieza al azar, simulacion de la ruleta
         int indiceAleatorio = random.nextInt(piezasDisponibles.size());
         String piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
-        //Pieza piezaSeleccionada = piezasDisponibles.get(indiceAleatorio);
-        //JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaSeleccionada.getTipo() + " de " + colorTurno);
-        return piezaSeleccionada; //.getTipo();
+        return piezaSeleccionada;
     }
 
     public boolean tienePiezasDeTipo(String color, String tipo) {
@@ -160,7 +150,6 @@ public class Tablero {
         for (int i = 0; i < tamaño; i++) {
             for (int j = 0; j < tamaño; j++) {
                 Pieza p = matriz[i][j];
-                //solo cuenta si existe, tiene el color correcto y tiene vidas
                 if (p != null && p.getColor().equals(color) && p.getVidas() > 0) {
                     contador++;
                 }
@@ -169,25 +158,17 @@ public class Tablero {
         return contador;
     }
 
-    /*recursividad 1: verificar si el camino entre dos puntos esta despejado,
-    solo para una casilla intermedia
-    funcion clave para el ataque de lanza de la muerte*/
     public boolean esCaminoDespejado(int f1, int c1, int f2, int c2) {
-        //caso base 1: si el destino es el siguiente paso(movimiento normal)
         if (Math.max(Math.abs(f2 - f1), Math.abs(c2 - c1)) == 1) {
             return true;
         }
 
-        //caso base 2: fuera de los limites del tablero(no deberia pasar si se llama correctamente)
         if (f1 < 0 || f1 >= tamaño || c1 < 0 || c1 >= tamaño) {
             return true;
         }
-
-        //calcular el punto intermedio(solo funciona para lineas rectas y distancias de 2)
         int fIntermedia = f1;
         int cIntermedia = c1;
 
-        //determinar la direccions del movimiento(horizontal, vertica o diagonal)
         if (f2 > f1) {
             fIntermedia++;
         }
@@ -202,20 +183,13 @@ public class Tablero {
             cIntermedia--;
         }
 
-        //verificar si la casilla intermedia esta ocupada
         if (matriz[fIntermedia][cIntermedia] != null) {
-            return false; //case base 3: hay obstaculo
+            return false; 
         }
-
-        /*paso recursivo: si la casilla intermedia esta vacia, llama a la funciona para
-        revisar si el camino desde el punto intermedio hasta el destino esta libre
-        esto permite generalizar la funcin para distancias mayores si fuera necesario*/
         return esCaminoDespejado(fIntermedia, cIntermedia, f2, c2);
     }
 
-    //recursividad 2: cuenta cuantas piezas de un tipo espefico tiene un jugador. ej zombie
     public int contarPiezasPorTipo(String color, String tipo, int fila, int columna, int contador) {
-        //caso base 1: se ha recorrido la ultima fila, la busqueda termina
         if (fila >= tamaño) {
             return contador;
         }
@@ -223,7 +197,6 @@ public class Tablero {
         int nuevaFila = fila;
         int nuevaColumna = columna + 1;
 
-        //si la columna excede le limite, pasaos a la siguiente fila
         if (nuevaColumna >= tamaño) {
             nuevaColumna = 0;
             nuevaFila++;
@@ -231,18 +204,15 @@ public class Tablero {
 
         Pieza p = matriz[fila][columna];
 
-        //logica del paso recursivo
         if (p != null && p.getColor().equals(color) && p.getTipo().equals(tipo)) {
-            contador++; //se encontro la pieza, incrementa el  contador
+            contador++;
         }
-        //llamada recursiva al siguiente elemeno de la matriz
         return contarPiezasPorTipo(color, tipo, nuevaFila, nuevaColumna, contador);
     }
 
     //revisar si la casilla de destino esta vacia para conjurar el zombie
     public boolean ConjurarZombie(int fMuerte, int cMuerte, int destFila, int destColumna) {
         if (matriz[destFila][destColumna] == null) {
-            //se asume que se sabe el color que cojura, el colo de la muerte
             String colorZombie = matriz[fMuerte][cMuerte].getColor();
             Zombie nuevoZombie = new Zombie(colorZombie);
             nuevoZombie.setPosicion(destFila, destColumna);
@@ -256,8 +226,6 @@ public class Tablero {
     public String ejecutarAtaque(int origenFila, int origenColumna, int destFila, int destColumna, String tipoAtaque) {
         Pieza atacante = matriz[origenFila][origenColumna];
         Pieza defensor = matriz[destFila][destColumna];
-
-        tipoAtaque = tipoAtaque.toLowerCase();
         
         if (defensor == null || atacante.getColor().equals(defensor.getColor())) {
             return "Objetivo de ataque invalido";
@@ -268,7 +236,7 @@ public class Tablero {
 
         //logica para el daño por cada tipo
         switch (tipoAtaque) {
-            case "normal":
+            case "Normal":
                 danioCausado = atacante.getAtaque();
                 ignorarEscudo = false;
                 if (calcularDistancia(origenFila, origenColumna, destFila, destColumna) > 1) {
@@ -304,11 +272,9 @@ public class Tablero {
                 return "Tipo de ataque invalido";
         }
 
-        //aplicar el daño y generar el resultado
         defensor.recibirDanio(danioCausado, ignorarEscudo);
         String mensaje;
 
-        //verificar despues de los ataques si la pieza fue destruida
         if (defensor.getVidas() <= 0) {
             if (defensor.getColor().equals("Blanco")) {
                 capturadasNegro.add(defensor);
@@ -324,26 +290,20 @@ public class Tablero {
         return mensaje;
     }
 
-    //calcular la distancia en casillas, maximo de la direfencia entre filas o columnas
     public double calcularDistancia(int r1, int c1, int r2, int c2) {
         int dr = Math.abs(r1 - r2);
         int dc = Math.abs(c1 - c2);
-        //para movimientos rectos y diagonales, la distancia es el maximo de las diferencias
         return Math.max(dr, dc);
     }
 
-    //verificar si un movimiento es valido, recto o diagonal
     private boolean movimientoValido(int r1, int c1, int r2, int c2) {
         int dr = Math.abs(r1 - r2);
         int dc = Math.abs(c1 - c2);
-        /*valido si el horizontal - dr = 0
-        vertical - dc = 0 , o diagonal dr=dc*/
+
         return (dr == 0 || dc == 0 || dr == dc);
     }
 
-    //verificar si un zombie del color especificado esta adyacente a la casilla
     public boolean zombieAdyacente(int r, int c, String color) {
-        //coordenadas para revisar las 8 dirreciones adyacentes
         int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};
         int[] dc = {-1, 0, 1, -1, 1, -1, 0, 1};
 
@@ -351,11 +311,9 @@ public class Tablero {
             int rAdy = r + dr[i];
             int cAdy = c + dc[i];
 
-            //verificar limites del tablero
             if (rAdy >= 0 && rAdy < 6 && cAdy >= 0 && cAdy < 6) {
                 Pieza p = matriz[rAdy][cAdy];
 
-                //verificar si es un zombie y si es del color aliado
                 if (p != null && p.getTipo().equals("Zombie") && p.getColor().equals(color)) {
                     return true;
                 }

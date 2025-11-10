@@ -15,7 +15,7 @@ public class cerrarCuenta extends JFrame {
     private JPasswordField txtConfirmarPassword;
 
     private final Color COLOR_TEXTO = Color.WHITE;
-    private final Font FONT_LABEL = new Font("Bodoni Bd BT", Font.PLAIN, 16);
+    private final Font FONT_LABEL = new Font("Bodoni Bd BT", Font.BOLD, 20);
 
     public cerrarCuenta(SistemaJuego sistema, Player jugadorActual) {
         super("Eliminar Cuenta - " + jugadorActual.getUsername());
@@ -29,13 +29,13 @@ public class cerrarCuenta extends JFrame {
 
         fondoPanel fondo = new fondoPanel("/img/fondoC.png");
         fondo.setLayout(new BorderLayout());
-        fondo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        fondo.setBorder(BorderFactory.createEmptyBorder(90, 90, 90, 90));
 
         JPanel panel = new JPanel(new GridLayout(2, 2, 10, 10));
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(Color.RED, 2), "ELIMINAR CUENTA (ACCIÓN PERMANENTE)",
-            TitledBorder.LEFT, TitledBorder.TOP, FONT_LABEL.deriveFont(Font.BOLD, 18), Color.RED));
+            BorderFactory.createLineBorder(Color.WHITE, 5), "ELIMINAR CUENTA (ACCIÓN PERMANENTE)",
+            TitledBorder.LEFT, TitledBorder.TOP, FONT_LABEL.deriveFont(Font.BOLD, 25), Color.WHITE));
 
         txtConfirmarPassword = new JPasswordField(5);
         JButton btnEliminar = new JButton("ELIMINAR CUENTA");
@@ -43,7 +43,7 @@ public class cerrarCuenta extends JFrame {
         btnEliminar.setForeground(COLOR_TEXTO);
         btnEliminar.setFont(FONT_LABEL.deriveFont(Font.BOLD));
 
-        panel.add(crearLabel("Confirmar contraseña:"));
+        panel.add(crearLabel("CONFIRMAR CONTRASEÑA:"));
         panel.add(txtConfirmarPassword);
         panel.add(new JLabel(""));
         panel.add(btnEliminar);

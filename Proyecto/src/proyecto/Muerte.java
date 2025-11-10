@@ -6,7 +6,7 @@ package proyecto;
 
 import javax.swing.JOptionPane;
 
-public class Muerte extends PiezaPrincipal{
+public final class Muerte extends PiezaPrincipal{
     private static final int ATAQUE_INICIAL = 4;
     private static final int VIDAS_INICIALES = 3;
     private static final int ESCUDO_INICIAL = 1;

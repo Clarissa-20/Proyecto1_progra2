@@ -107,7 +107,6 @@ public class selecRival extends JFrame {
 
 
     private void iniciarJuego(String nombreOponente) {
-        //String nombreOponente = nombreOponenteField.getText().trim(); 
 
         if (nombreOponente.equals(this.jugadorPrincipal.getUsername())) {
             JOptionPane.showMessageDialog(this, "No puedes jugar contra ti mismo. Ingresa un oponente válido.", "Error de Validación", JOptionPane.ERROR_MESSAGE);

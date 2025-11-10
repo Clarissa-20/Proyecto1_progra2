@@ -14,13 +14,13 @@ public class MiCuenta extends JFrame{
     
     private final Color color1 = new Color(150, 0, 0);
     private final Color colorTexto = Color.WHITE;
-    private final Font btnFont = new Font("Bodoni Bd BT", Font.BOLD, 16);
+    private final Font btnFont = new Font("Bodoni Bd BT", Font.BOLD, 20);
     
     public MiCuenta(SistemaJuego sistema, Player jugador){
         this.miSistema = sistema;
         this.jugadorActual = jugador;
         
-        setTitle("Menu Inicio");
+        setTitle("Mi Cuenta");
         setSize(800, 550);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -32,27 +32,34 @@ public class MiCuenta extends JFrame{
     
     private void initComponents(){
         fondoPanel fp = new fondoPanel("/img/fondoC.png");
-        fp.setLayout(new GridLayout(4, 1, 15, 15));
+        fp.setLayout(new BorderLayout());
         
         JLabel titulo = new JLabel("MI CUENTA", SwingConstants.CENTER);
         titulo.setFont(new Font("Bodoni Bd BT", Font.BOLD, 24));
         titulo.setForeground(colorTexto);
+        titulo.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
+        
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(4, 1, 15, 15));
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(30, 200, 60, 200));
+        panelBotones.setOpaque(false);
         
         JButton btnVerInfo = crearBoton("VER MI INFORMACION");
         JButton btnCambiarContra = crearBoton("CAMBIAR PASSWORD");
         JButton btnCerrarCuenta = crearBoton("CERRAR MI CUENTA");
         
+        panelBotones.add(btnVerInfo);
+        panelBotones.add(btnCambiarContra);
+        panelBotones.add(btnCerrarCuenta);
         
         btnVerInfo.addActionListener(e -> vtnInfo());
         btnCambiarContra.addActionListener(e -> vtnCambioContra());
         btnCerrarCuenta.addActionListener(e -> vtnCerrarCuenta());
         
-        fp.add(titulo);
-        fp.add(btnVerInfo);
-        fp.add(btnCambiarContra);
-        fp.add(btnCerrarCuenta);
+        fp.add(titulo, BorderLayout.NORTH);
+        fp.add(panelBotones, BorderLayout.CENTER);
         
-        this.setContentPane(fp);
+        this.add(fp);
     }
     
     private JButton crearBoton(String texto){
@@ -61,6 +68,11 @@ public class MiCuenta extends JFrame{
         btn.setBackground(color1);
         btn.setForeground(colorTexto);
         btn.setFocusPainted(false);
+        btn.setPreferredSize(new Dimension(250, 50));
+        
+        btn.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(Color.WHITE, 5),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
         return btn;
     }
     
@@ -74,7 +86,7 @@ public class MiCuenta extends JFrame{
     }
     
     private void vtnInfo(){
-        verMiInfo info = new verMiInfo(jugadorActual);
+        verMiInfo info = new verMiInfo( jugadorActual);
         info.setVisible(true);
         this.dispose();
     }

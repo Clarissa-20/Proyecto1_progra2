@@ -14,7 +14,7 @@ public class CasillaPanel extends JPanel{
     private int fila;
     private int columna; 
     private JLabel imgPieza;
-    private vtnJuego vtnJuego; //referenca a la vtn principal para manejar el click vtnPadre
+    private vtnJuego vtnJuego; 
 
     public CasillaPanel(int fila, int columna, vtnJuego vtnJuego) {
         this.fila = fila;
@@ -24,7 +24,6 @@ public class CasillaPanel extends JPanel{
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
-        //asignar el color de fondo para simular el tablero
         Color colorCasilla = (fila+columna) % 2 == 0 ? new Color(230, 230, 230) : new Color(35, 35, 35);
         setBackground(colorCasilla);
         
@@ -34,16 +33,15 @@ public class CasillaPanel extends JPanel{
         //manejo del evento de click
         this.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                //notifica a la vtnJuego las oordenas de la casilla clickeada
                 vtnJuego.manejarClickCasilla(fila, columna);
             }
         });
     }
     
-    //metodo para la asignacion de la img basada en la pieza - PiezaVisual
+    //metodo para la asignacion de la img basada en la pieza
     public void PiezaVisual(Pieza pieza){
         if(pieza == null){
-            imgPieza.setIcon(null); //casilla vacia
+            imgPieza.setIcon(null);
         } else{
             try{
                 String tipo = pieza.getTipo();
@@ -74,7 +72,7 @@ public class CasillaPanel extends JPanel{
                 imgPieza.setIcon(new ImageIcon(img));
             } catch(Exception e){
                 System.err.println("Error cargando la imagen para "+pieza.getTipo()+": "+e.getMessage());
-                imgPieza.setText(pieza.getTipo().substring(0, 1)); //muestra la inicial si la img falla
+                imgPieza.setText(pieza.getTipo().substring(0, 1));
             }
         }
     }

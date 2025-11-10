@@ -11,12 +11,14 @@ public class GameLog {
     private String ganador;
     private String perdedor;
     private String mensajeFinal;
+    private int puntosGanados;
     
-    public GameLog(String ganador, String perdedor, String mensajeFinal){
+    public GameLog(String ganador, String perdedor, String mensajeFinal, int puntosGanados){
         this.fechaJuego = LocalDateTime.now();
         this.ganador = ganador;
         this.perdedor = perdedor;
         this.mensajeFinal = mensajeFinal;
+        this.puntosGanados = puntosGanados;
     }
     
     public LocalDateTime getFechaJuego(){
@@ -35,8 +37,12 @@ public class GameLog {
         return mensajeFinal;
     }
     
+    public int getPuntosGanados(){
+        return puntosGanados;
+    }
+    
     @Override
     public String toString(){
-        return fechaJuego.toLocalDate()+" - "+mensajeFinal;
+        return fechaJuego.toLocalDate()+" - "+mensajeFinal+" - JUGADOR "+ganador.toUpperCase()+" VENCIO A JUGADOR "+perdedor.toUpperCase()+" - PUNTOS GANADOS: "+puntosGanados;
     }
 }

@@ -10,7 +10,7 @@ import javax.swing.*;
 
 public class MenuPrincipal extends JFrame{
     private SistemaJuego sistema;
-    private Player jugadorActual; //referencia al jugador logeado
+    private Player jugadorActual; 
 
     public MenuPrincipal(SistemaJuego sistema, Player jugador) {
         this.sistema = sistema;

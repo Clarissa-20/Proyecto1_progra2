@@ -6,7 +6,7 @@ package proyecto;
 
 import javax.swing.JOptionPane;
 
-public class HombreLobo extends PiezaPrincipal {
+public final class HombreLobo extends PiezaPrincipal {
     private static final int ATAQUE_INICIAL = 5;
     private static final int VIDAS_INICIALES = 5;
     private static final int ESCUDO_INICIAL = 2;

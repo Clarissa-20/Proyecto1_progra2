@@ -17,21 +17,20 @@ public class vtnJuego extends JFrame {
     private SistemaJuego sistema;
     private String accionEspecial = null;
 
-    //logica del estado del click(para saber si es origen o destino)
     private int origenFila = -1, origenColumna = -1;
     private boolean piezaSelec = false;
 
     private Player jugador1;
     private Player jugador2; 
-    private String turnoActual; // negro o blanco
+    private String turnoActual; 
 
     private JLabel turnoInfo;
     private JButton btnRuleta;
-    private JLabel piezaSeleccionada; //muestra la img eleigida al azar
+    private JLabel piezaSeleccionada; 
     private JButton btnRetirar;
 
     private String piezaPermitida = null;
-    private int girosRestantes = 1; //por defaut
+    private int girosRestantes = 1; 
 
     private JLabel imgRuleta;
     private JLabel ruletaGif;
@@ -47,9 +46,9 @@ public class vtnJuego extends JFrame {
         this.sistema = sistema;
         this.jugador1 = p1;
         this.jugador2 = p2;
-        this.tablero = new Tablero(); //inicializa el tablero
+        this.tablero = new Tablero();
         this.tableroVisual = new CasillaPanel[6][6];
-        this.turnoActual = "Blanco"; //este empieza
+        this.turnoActual = "Blanco"; 
 
         setTitle("Vampire Wargame - Juego");
         setSize(1500, 800);
@@ -59,7 +58,6 @@ public class vtnJuego extends JFrame {
         fp.setLayout(new BorderLayout());
         setContentPane(fp);
 
-        //crear el panel del tablero visual
         JPanel panelTablero = new JPanel(new GridLayout(6, 6));
         panelTablero.setOpaque(false);
         for (int i = 0; i < 6; i++) {
@@ -81,9 +79,6 @@ public class vtnJuego extends JFrame {
         panelCentral.add(panelTablero, BorderLayout.CENTER);
         fp.add(panelCentral, BorderLayout.CENTER);
 
-        /*crear el panle del control
-        ruleta, info de turno, btn de retirar*/
-        //inicializar el tablero con las imgs de las piezas
         actualizarTableroVisual();
         actualizarInfoJugador();
     }
@@ -229,8 +224,6 @@ public class vtnJuego extends JFrame {
         panelControl.add(piezaSeleccionada);
         panelControl.add(Box.createVerticalStrut(40));
 
-        //btns de ataque especial, se activan por turno, pendientes hasta implementar la ruleta
-        //btn retirar
         btnRetirar = new JButton("RETIRAR");
         btnRetirar.setPreferredSize(new Dimension(250, 50));
         btnRetirar.setFont(new Font("Bodoni Bd BT", Font.BOLD, 20));
@@ -302,25 +295,20 @@ public class vtnJuego extends JFrame {
         return opcRuleta[indiceAleatorio];
     }
 
-    //metodo sincronozar la matriz logica(Tablero.matriz) con GUI
     private void actualizarTableroVisual() {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-                Pieza p = tablero.getPieza(i, j); //nesecita un getter en tablero para esto
+                Pieza p = tablero.getPieza(i, j); 
                 tableroVisual[i][j].PiezaVisual(p);
-                tableroVisual[i][j].desresaltar(); //limpia cualquer resultado anterior
+                tableroVisual[i][j].desresaltar(); 
             }
         }
     }
 
-    //logica que se ejecuta cada vez que el usuario hace click en una casilla
     public void manejarClickCasilla(int fila, int columna) {
         Pieza piezaClickeada = tablero.getPieza(fila, columna);
 
         if (!piezaSelec) {
-            //1 selec origen
-
-            //validacion de la ruleta
             if (piezaPermitida == null) {
                 JOptionPane.showMessageDialog(this, "Primero debes girar la ruleta para selecionar tu pieza", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -336,31 +324,27 @@ public class vtnJuego extends JFrame {
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE, null, opcM, opcM[0]);
 
-                    if (seleccion == 1) { //se seleciona conjurar el zombie
+                    if (seleccion == 1) { 
                         this.accionEspecial = "conjurarZombie";
                         origenFila = fila;
                         origenColumna = columna;
                         piezaSelec = true;
                         tableroVisual[fila][columna].resaltar(Color.ORANGE);
                         JOptionPane.showMessageDialog(this, "Selecciona una casilla vacia para conjurar el Zombie");
-                        return; //terminamos el primer click, esperando destino
+                        return;
                     }
                 }
 
-                //flujo normal de seleccion de origen
                 origenFila = fila;
                 origenColumna = columna;
                 piezaSelec = true;
                 tableroVisual[fila][columna].resaltar(Color.GREEN);
-                //JOptionPane.showMessageDialog(null, "Pieza seleccionada: " + piezaClickeada.getTipo() + ". Selecciona la casilla destino");
             } else {
-                //error de selecion
                 JOptionPane.showMessageDialog(this, "Selecciona una pieza valida de tu color y seleccionada por la ruleta (" + piezaPermitida + ")", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            //2 seleccionar destino/ataque
 
-            //desrsaltar la pieza de origen
+            //destinos o ataques
             tableroVisual[origenFila][origenColumna].desresaltar();
 
             Pieza atacante = tablero.getPieza(origenFila, origenColumna);
@@ -368,7 +352,6 @@ public class vtnJuego extends JFrame {
             boolean exito = false;
             String mensaje = null;
 
-            //manejo de conjurar el zombie, segundo click
             if (this.accionEspecial != null && this.accionEspecial.equals("conjurarZombie")) {
                 //verifica que este vacio y sea adyacente
                 if (defensor == null && tablero.calcularDistancia(origenFila, origenColumna, fila, columna) == 1) {
@@ -378,17 +361,14 @@ public class vtnJuego extends JFrame {
                 } else {
                     mensaje = "Solo puedes conjurar un Zombie en una casilla vacia adyacente";
                 }
-                this.accionEspecial = null; //resetera el estado especial
+                this.accionEspecial = null; 
             } else if (defensor == null) {
-                //movimiento simple - destino vacio
                 exito = tablero.ejecutarMovimiento(origenFila, origenColumna, fila, columna);
                 if (exito) {
-                    //mensaje = "Movimiento exitoso";
                 } else {
                     mensaje = "Movimiento invalido, distancia o direccion incorrecta";
                 }
             } else if (defensor.getColor().equals(atacante.getColor())) {
-                //ocupada por pieza propia
                 mensaje = " Casilla ocupada por pieza propia, selecciona otra casila";
             } else {
                 //ataque a rivalk, se puede elejir el ataque normal o especial
@@ -408,7 +388,7 @@ public class vtnJuego extends JFrame {
                         JOptionPane.PLAIN_MESSAGE, null, opcAtaque, opcAtaque[0]);
 
                 if (seleccionAtaque != null) {
-                    String ataqueTipo = "NORMAL";
+                    String ataqueTipo = "Normal";
                     if (seleccionAtaque.contains("Chupar Sangre")) {
                         ataqueTipo = "chuparSangre";
                     } else if (seleccionAtaque.contains("Lanza")) {
@@ -430,8 +410,6 @@ public class vtnJuego extends JFrame {
                 }
             }
 
-            //manejo del mensaje y fin del turno
-            //mostrar msj de la accion, exit - error
             if (mensaje != null) {
                 if (mensaje.startsWith("ERROR")) {
                     JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
@@ -481,12 +459,12 @@ public class vtnJuego extends JFrame {
 
         if (confirmar == JOptionPane.YES_OPTION) {
             //el jugador actual se retira y es le perdedor
-            Player perdedor = turnoActual.equals("Negro") ? jugador1 : jugador2;
+            Player perdedor = turnoActual.equals("Blanco") ? jugador1 : jugador2;
             Player ganador = turnoActual.equals("Blanco") ? jugador2 : jugador1;
-
+            
             //dar los puntos y guardar el log
             ganador.agregarPuntos(Tablero.puntosVictoria);
-            GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR RETIRO");
+            GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR RETIRO", Tablero.puntosVictoria);
             sistema.guardarLog(log);
 
             JOptionPane.showMessageDialog(this,
@@ -503,16 +481,14 @@ public class vtnJuego extends JFrame {
         Player perdedor = turnoActual.equals("Blanco") ? jugador1 : jugador2;
 
         //dar puntos al ganador
-        ganador.agregarPuntos(Tablero.puntosVictoria); //asumiendo que es public static final
+        ganador.agregarPuntos(Tablero.puntosVictoria);
 
         //guardar log
-        GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR DESTRUCCION TOTAL DE PIEZAS");
+        GameLog log = new GameLog(ganador.getUsername(), perdedor.getUsername(), "VICTORIA POR DESTRUCCION TOTAL DE PIEZAS", Tablero.puntosVictoria);
         sistema.guardarLog(log);
 
-        //mostrar msj y volver al menu principal
         JOptionPane.showMessageDialog(this, "¡Juego Terminado! El jugador " + ganador.getUsername() + " vencio al jugador " + perdedor.getUsername() + ". Has ganado 3 puntos", "VICTORIA", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("FIN JUEGO: jugador " + ganador.getUsername() + " has ganado la partida. Perdedor: " + perdedor.getUsername());
-        //cierra la vtn de juego y abre la principal, pendiente reabrir el menu principal
         new MenuPrincipal(sistema, ganador).setVisible(true);
         this.dispose();
     }
